@@ -8,7 +8,7 @@ function Panier(props) {
         <div className="panier-empty-button">
           <p>Valider mon panier</p>
         </div>
-        <div class="panier-empty">
+        <div className="panier-empty">
           <p>Votre panier est vide</p>
         </div>
       </div>
@@ -23,7 +23,7 @@ function Panier(props) {
         <div className="panier-empty-button notEmpty">
           <p>Valider mon panier</p>
         </div>
-        <div class="panier-quantite">
+        <div className="panier-quantite">
           <div>
             {props.basket.map(element => {
               return (
@@ -41,7 +41,7 @@ function Panier(props) {
           </div>
           <a href="*">Précisez vos allergies</a>
         </div>
-        <div class="panier-sous-total">
+        <div className="panier-sous-total">
           <div>
             <span>Sous-Total</span>
             <span>{`${somme} €`}</span>
@@ -54,7 +54,7 @@ function Panier(props) {
             <span>2,75 €</span>
           </div>
         </div>
-        <div class="panier-total">
+        <div className="panier-total">
           <div>
             <div>Pourboir livreur</div>
             <QuantityButton type="-" />

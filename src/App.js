@@ -3,35 +3,51 @@ import axios from "axios";
 import Header from "./components/Header";
 import Restaurant from "./components/Restaurant";
 import Menus from "./components/Menus";
-import PopUp from "./components/PopUp";
 import PopUpMenu from "./components/PopUpMenu";
 import Loading from "./components/Loading";
+import PopUp from "./components/PopUp";
 
 class App extends React.Component {
   state = {
     restaurantInfo: null,
     menus: null,
     infoLoading: true,
-    popUp: { display: false, plateId: null },
+    popUp: { display: false, dish: null },
     popUpMenu: { display: false },
     quantity: 1,
     basket: []
   };
 
-  fetchAPI = () => {
-    axios.get("https://deliveroo-api.now.sh/menu").then(response => {
-      this.setState({
-        restaurantInfo: response.data.restaurant,
-        menus: response.data.menu,
-        infoLoading: false
+  fetchAPI = async () => {
+    const response = await axios.get("https://deliveroo-api.now.sh/menu");
+    // On met les prix a 2 après la virgule
+    if (response.data) {
+      let menuTitle = Object.keys(response.data.menu);
+
+      menuTitle.forEach(title => {
+        let meal = response.data.menu[title];
+        if (meal.length > 0) {
+          meal.forEach(e => {
+            console.log(e);
+            e.price = Number(e.price)
+              .toFixed(2)
+              .toString();
+          });
+        }
       });
+    }
+
+    this.setState({
+      restaurantInfo: response.data.restaurant,
+      menus: response.data.menu,
+      infoLoading: false
     });
   };
 
-  // PopUp
-  setPopUp = id => {
+  /*********  POP UP *********/
+  togglePopUp = e => {
     this.setState({
-      popUp: { display: true, plateId: id }
+      popUp: { display: !this.state.popUp.display, dish: e }
     });
   };
   handleClickQuantity = e => {
@@ -60,24 +76,22 @@ class App extends React.Component {
       }
     } else {
       arr.push(toto);
-      this.setState({ basket: arr });
     }
-    this.setState({ basket: arr });
+    this.setState({ basket: arr, popUp: { display: false } });
   };
 
-  // PopupMenu
+  /********** POPUP MENU ***********/
 
-  setPopUpMenu = id => {
-    this.setState({
-      popUpMenu: { display: true }
-    });
+  setPopUpMenu = () => {
+    this.setState({ popUpMenu: { display: true } });
   };
 
-  handleClickCancelMenu = () => {
+  cancelPopUpMenu = () => {
     this.setState({ popUpMenu: { display: false } });
   };
 
   render() {
+    console.log(this.state.menus);
     if (this.state.infoLoading === true) {
       return <Loading />;
     }
@@ -86,6 +100,22 @@ class App extends React.Component {
     } else {
       document.body.classList.remove("fixedScreen");
     }
+
+    const headerButtons = [
+      {
+        className: "nav-btn",
+        children: [
+          <i className="fas fa-shopping-basket" />,
+          <span>0,00 €</span>
+        ]
+      },
+      {
+        className: "nav-btn",
+        children: [<i className="fas fa-bars" />, <span>Menu</span>],
+        handleClickButton: this.setPopUpMenu
+      }
+    ];
+
     return (
       <div>
         <Header
@@ -93,20 +123,23 @@ class App extends React.Component {
             "https://consumer-component-library.roocdn.com/11.3.1/static/images/logo-teal.64a39561252047a022e5ce0929c75374.svg"
           }
           alt={"Deliveroo logo"}
-          setPopUpMenu={this.setPopUpMenu}
+          buttons={headerButtons}
         />
         {this.state.popUp.display && (
           <PopUp
             plateId={this.state.popUp.plateId}
-            menus={this.state.menus}
+            dish={this.state.popUp.dish}
             quantity={this.state.quantity}
             setQuantity={this.handleClickQuantity}
-            setCancel={this.handleClickCancel}
+            togglePopUp={this.togglePopUp}
             setValidation={this.handleClickValidation}
           />
         )}
         {this.state.popUpMenu.display && (
-          <PopUpMenu setCancel={this.handleClickCancelMenu} />
+          <PopUpMenu
+            popUpMenu={this.state.popUpMenu}
+            cancelPopUpMenu={this.cancelPopUpMenu}
+          />
         )}
         <Restaurant
           img={this.state.restaurantInfo.picture}
@@ -116,7 +149,7 @@ class App extends React.Component {
         />
         <Menus
           menus={this.state.menus}
-          popUp={id => this.setPopUp(id)}
+          setPopUp={id => this.togglePopUp(id)}
           basket={this.state.basket}
         />
       </div>

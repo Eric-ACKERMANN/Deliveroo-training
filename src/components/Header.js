@@ -1,20 +1,29 @@
 import React from "react";
 import Button from "./Button";
 
-export default function Header({ img, alt, setPopUpMenu }) {
+export default function Header({ img, alt, buttons, paddingLeft }) {
   return (
     <header>
-      <div className="container">
+      <div style={{ paddingLeft: paddingLeft }} className="container">
         <img src={img} alt={alt} />
-        <Button className="nav-btn">
-          <i class="fas fa-shopping-basket" />
-          <span>0,00 €</span>
-        </Button>
-        <Button handleClickButton={setPopUpMenu} className="nav-btn">
-          <i class="fas fa-bars" />
-          <span>Menu</span>
-        </Button>
+        {buttons.map((element, index) => {
+          return (
+            <Button
+              key={index}
+              className={element.className}
+              children={[...element.children]}
+              handleClickButton={element.handleClickButton}
+            />
+          );
+        })}
       </div>
     </header>
   );
 }
+
+Header.defaultProps = {
+  img: "",
+  alt: "",
+  buttons: [],
+  blockClass: ""
+};

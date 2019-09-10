@@ -11,19 +11,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --background-color-main: #fefefe;
   --font-family-main: "IBM Plex Sans";
   --font-family-second: "Stratos Deliveroo Web";
   --color-main: #2e3333;
-  --color-second: #33d6c9;
+  --color-second: #00ccbc;
+  --color-third: #828585;
   --container-width: 1120px;
   --border-color: #e8ebeb;
   --border-color-hover: #d1d1d1;
   --btn-border-radius: 5px;
+  --box-shadow-focus: 0px 0px 0px 3px rgba(51, 214, 201, 0.3);
 }
 
 .fixedScreen {
   overflow-y: hidden;
   overflow-x: hidden;
+  overflow: hidden;
 }
 
 code {
@@ -32,7 +36,7 @@ code {
 }
 
 .container {
-  width: 95vw;
+  padding: 0px 16px;
   max-width: var(--container-width);
   margin: 0 auto;
   height: 100%;
@@ -65,7 +69,25 @@ code {
 
 .nav-btn:focus {
   border-color: var(--color-second);
-  box-shadow: 0px 0px 0px 3px rgba(51, 214, 201, 0.3);
+  box-shadow: var(--box-shadow-focus);
+  transition: all 0.2s;
+}
+
+.x-btn {
+  color: var(--color-second);
+  border: none;
+  font-size: 28px;
+  margin: 15px 0px;
+  outline: none;
+  padding: 8px 0px;
+  line-height: 24px;
+  border-radius: var(--btn-border-radius);
+  transition: all 0.3s;
+}
+
+.x-btn:focus {
+  border-color: var(--color-second);
+  box-shadow: var(--box-shadow-focus);
   transition: all 0.2s;
 }
 
@@ -86,10 +108,88 @@ header img {
   margin-right: auto;
 }
 
-header div button:nth-child(2) {
-  margin-right: 14px;
+header div button:nth-of-type(2) {
+  margin-left: 14px;
 }
 
+/******* POPUP MENU *******/
+.popUpMenu {
+  background-color: var(--background-color-main);
+  margin-left: auto;
+  height: 100vh;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popUpMenu header button {
+  color: var(--color-second);
+}
+
+.popUpMenu ul {
+  margin: 10px 0px 0px 0px;
+  padding: 0px 16px;
+}
+
+.popUpMenu ul li {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  color: var(--color-main);
+  font-family: var(--font-family-main);
+  padding: 12px 0px;
+  line-height: 22px;
+}
+
+.popUpMenu ul li div:nth-child(2) {
+  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popUpMenu ul li:nth-child(-n + 2) div:nth-child(2) span:nth-child(1):hover {
+  color: var(--color-second);
+}
+
+.popUpMenu ul li:nth-child(-n + 2) div:nth-child(2) span:nth-child(2) {
+  color: var(--color-third);
+  padding: 8px 0px 0px 0px;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.popUpMenu ul i {
+  font-size: 20px;
+  color: var(--border-color-hover);
+}
+
+.popUpMenu ul li:nth-child(3),
+.popUpMenu ul li:nth-child(3) i {
+  color: red;
+}
+
+.popUpMenu-select {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px;
+  margin-top: auto;
+}
+
+.popUpMenu-select select {
+  background-color: var(--background-color-main);
+  border: 1px solid var(--border-color);
+  margin: 16px 0px;
+  font-size: 16px;
+  line-height: 22px;
+  height: 50px;
+  outline: none;
+}
+
+.popUpMenu-select select:focus {
+  border: 1px solid var(--color-second);
+  box-shadow: var(--box-shadow-focus);
+}
 /* RESTAURANT DESCRIPTION */
 .restaurant-centered {
   width: 98vw;
@@ -280,12 +380,20 @@ nav {
 }
 
 /* MENUS PARTIE GAUCHE */
-.menusType {
+.menu-left {
   flex: 2;
 }
 
-/* PLATES */
-.menuType-container {
+/* MENUS PARTIE DROITE */
+.menu-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-content: center;
+}
+
+/********* MEALS *********/
+.meals {
   display: flex;
   flex-direction: column;
   padding: 0px 10px 0px 0px;
@@ -293,39 +401,39 @@ nav {
   min-width: 360px;
 }
 
-.scrolling-test {
-  height: 60px;
-}
-.menuType-title {
+.meals > p {
+  font-size: 28px;
+  line-height: 28px;
+  color: #2e3333;
+  font-weight: 700;
   margin: 0;
   margin: 0px 0px 3px 0px;
   padding: 0;
   font-family: "Stratos Deliveroo Web";
 }
-.plate-list {
+.meals > div {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.menuType-container > p {
-  font-size: 28px;
-  line-height: 28px;
-  color: #2e3333;
-  font-weight: 700;
-}
+/******* PLATES **********/
+
 .plate-container {
   background-color: white;
   width: 43%;
   display: flex;
   padding: 15px 15px;
   margin-top: 15px;
+  box-shadow: 0;
+  transition: box-shadow 0.3s;
 }
 
 .plate-container:hover {
   cursor: pointer;
-  box-shadow: 0px 15px 15px 5px rgba(224, 224, 224, 0.5);
+  box-shadow: 0px 0px 15px 5px rgba(224, 224, 224, 0.5);
+  transition: box-shadow 0.3s;
 }
 
 .plate-description-div {
@@ -386,25 +494,20 @@ nav {
   margin-right: 3px;
 }
 
-/* MENUS PARTIE DROITE */
-.menu-right {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-content: center;
-}
-
 /* PopUpScreen */
 
 .popUp-container {
   background-color: rgba(0, 0, 0, 0.5);
   min-height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  top: 0;
+  left: 0;
+  overflow: scroll;
 }
 
 .popUp-plate-container {

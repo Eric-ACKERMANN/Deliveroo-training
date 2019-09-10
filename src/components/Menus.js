@@ -1,21 +1,22 @@
 import React from "react";
-import Plates from "./Plates";
+import Meals from "./Meals";
 import Navigator from "./Navigator";
 
-function MenuType(props) {
-  const menuTitles = Object.keys(props.menus);
+export default function Menu({ menus, setPopUp, basket }) {
+  const menuTitles = Object.keys(menus);
 
   return (
     <div className="menu-background">
-      <Navigator menuTitles={menuTitles} basket={props.basket} />
+      <Navigator menuTitles={menuTitles} basket={basket} />
       <div className="menu-centered">
-        <div className="menusType">
-          {menuTitles.map(menuTitle => {
+        <div className="menu-left">
+          {menuTitles.map((menuTitle, index) => {
             return (
-              <Plates
+              <Meals
+                key={index}
                 menuTitle={menuTitle}
-                plates={props.menus[menuTitle]}
-                popUp={id => props.popUp(id)}
+                dishes={menus[menuTitle]}
+                setPopUp={setPopUp}
               />
             );
           })}
@@ -26,5 +27,3 @@ function MenuType(props) {
     </div>
   );
 }
-
-export default MenuType;
