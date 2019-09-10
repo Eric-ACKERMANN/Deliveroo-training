@@ -1,0 +1,496 @@
+@import "./fonts.css";
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fixedScreen {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.header-centered {
+  width: 95vw;
+  max-width: 1120px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* HEADER */
+header {
+  height: 75px;
+  border-bottom: solid 2px #e7ebeb;
+}
+
+.header-centered {
+  width: 95vw;
+  max-width: 1120px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-logo {
+  height: 32px;
+}
+
+/* RESTAURANT DESCRIPTION */
+.restaurant-centered {
+  width: 98vw;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 16px 25px 16px;
+  display: flex;
+  flex-direction: row;
+}
+
+.restaurant-titre {
+  font-size: 28px;
+  line-height: 28px;
+  color: #2e3333;
+  font-family: "Stratos Deliveroo Web";
+  letter-spacing: -1px;
+}
+
+.restaurant-blocDescription {
+  flex: 2;
+}
+.restaurant-description {
+  font-size: 14px;
+  line-height: 19px;
+  color: #828585;
+}
+
+.test {
+  height: 165px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.restaurant-logo {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+/* NAVIGATOR */
+nav {
+  border-top: solid 2px #e7ebeb;
+  height: 50px;
+  padding-right: 5px;
+  background-color: white;
+  display: flex;
+}
+
+.container-nav {
+  width: 98vw;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  font-size: 14px;
+  line-height: 19px;
+  color: #00b8a9;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  padding: 0;
+  flex: 2;
+}
+
+.nav-list > li {
+  margin: 0px 20px;
+}
+
+.nav-right {
+  flex: 1;
+  background-color: red;
+}
+
+/* MENU */
+.menu-background {
+  background-color: #f4f5f5;
+}
+.menu-centered {
+  width: 98vw;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  padding: 0px 16px;
+}
+
+.menusType {
+  width: 65%;
+}
+
+/* NAVIGATOR */
+.nav-sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+nav {
+  border-top: solid 2px #e7ebeb;
+  height: 50px;
+  padding-right: 5px;
+}
+
+.container-nav {
+  width: 1120px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  font-size: 14px;
+  line-height: 19px;
+  color: #00b8a9;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  padding: 0;
+  flex: 2;
+}
+
+.nav-list > li {
+  margin: 0px 20px;
+}
+
+/*PANIER */
+
+.panier-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  background-color: white;
+  box-shadow: 0px 15px 15px 5px rgba(224, 224, 224, 0.5);
+}
+
+.panier-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+/* EMPTY BASKET */
+
+.panier-empty-button {
+  width: 100%;
+  height: 45px;
+  text-align: center;
+  font-size: 16px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  line-height: 16px;
+  color: #6d7777;
+  border-radius: 2px;
+  background-color: #bac3c3;
+}
+
+.panier-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  width: 100%;
+  font-size: 16px;
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 22px;
+  color: #828585;
+}
+
+.notEmpty {
+  color: white;
+  background-color: #00ccbc;
+}
+
+/* NOT EMPTY BASKET */
+.basket-element {
+  display: flex;
+  flex-direction: row;
+}
+
+/* MENUS PARTIE GAUCHE */
+.menusType {
+  flex: 2;
+}
+
+/* PLATES */
+.menuType-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px 0px 0px;
+  flex: 1;
+  min-width: 360px;
+}
+
+.scrolling-test {
+  height: 60px;
+}
+.menuType-title {
+  margin: 0;
+  margin: 0px 0px 3px 0px;
+  padding: 0;
+  font-family: "Stratos Deliveroo Web";
+}
+.plate-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.menuType-container > p {
+  font-size: 28px;
+  line-height: 28px;
+  color: #2e3333;
+  font-weight: 700;
+}
+.plate-container {
+  background-color: white;
+  width: 43%;
+  display: flex;
+  padding: 15px 15px;
+  margin-top: 15px;
+}
+
+.plate-container:hover {
+  cursor: pointer;
+  box-shadow: 0px 15px 15px 5px rgba(224, 224, 224, 0.5);
+}
+
+.plate-description-div {
+  width: 100%;
+}
+.plate-title {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 22px;
+  color: #2e3333;
+  font-family: "IBM Plex Sans", sans-serif;
+  margin-bottom: 5px;
+}
+
+.plate-description {
+  font-size: 14px;
+  line-height: 19px;
+  color: #828585;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 40px;
+}
+.plate-price-popular-div {
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+}
+.plate-price {
+  font-size: 16px;
+  line-height: 22px;
+  color: #828585;
+  margin: 0;
+  padding: 0;
+}
+.plate-logo-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.plate-container .plate-logo {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.plate-populaire {
+  color: #ff8100;
+  font-size: 12px;
+  font-weight: 800;
+  margin-left: 20px;
+}
+
+#star-logo {
+  margin-right: 3px;
+}
+
+/* MENUS PARTIE DROITE */
+.menu-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-content: center;
+}
+
+/* PopUpScreen */
+
+.popUp-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popUp-plate-container {
+  background-color: white;
+  width: 570px;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 15px 0px;
+}
+.popUp-plate-upper {
+  padding: 30px 30px 0px 30px;
+}
+
+.popUp-plate-image {
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+}
+
+.popUp-plate-title {
+  margin: 20px 0px;
+  margin-bottom: 10px;
+  font-size: 28px;
+  line-height: 28px;
+  color: #2e3333;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.popUp-plate-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 14apx;
+  color: #828585;
+  font-family: "IBM Plex Sans", sans-serif;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+.popUp-plate-lower {
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+  margin-top: 20px;
+  box-shadow: 0px -1px 5px 2px rgba(224, 224, 224, 0.5);
+}
+
+.popUp-plate-quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+/* PopUpScreen Button */
+/* Button to select quantity */
+
+.popUp-quantity-button {
+  margin: 0px 60px;
+}
+
+svg:hover > g {
+  fill: #008075;
+}
+
+.popUp-plate-quantity {
+  margin: 0;
+  padding: 0;
+}
+.popUp-quantity-button:hover {
+  cursor: pointer;
+}
+
+.popUp-plate-purchase {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  height: 110px;
+  width: 100%;
+  align-items: center;
+  border-top: white 1px solid;
+}
+
+/* Button to cancel in popUpScreen */
+.cancelButton {
+  flex: 1;
+  height: 50px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #00ccbc;
+  color: #00ccbc;
+}
+
+.cancelButton:hover {
+  cursor: pointer;
+  color: #00e6d2;
+  border: 1px solid #00e6d2;
+}
+
+/* Button that shows total purchase for one plate and confirm in popUpScreen */
+.totalButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  margin-left: 25px;
+  height: 50px;
+  border-radius: 3px;
+  background-color: #00ccbc;
+  color: white;
+  font-weight: 600;
+}
+
+.totalButton:hover {
+  cursor: pointer;
+  background-color: #00e6d2;
+}
