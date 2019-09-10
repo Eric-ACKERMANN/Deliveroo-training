@@ -15,7 +15,7 @@ function MenuType(props) {
               <Plates
                 menuTitle={menuTitle}
                 plates={props.menus[menuTitle]}
-                popUpScreen={id => props.popUpScreen(id)}
+                popUp={id => props.popUp(id)}
               />
             );
           })}

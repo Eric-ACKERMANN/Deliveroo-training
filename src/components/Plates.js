@@ -11,7 +11,7 @@ function Plates(props) {
             // when plate-container is clicked, it pops up a window with the plate
             <div
               className="plate-container"
-              onClick={event => props.popUpScreen(element.id)}
+              onClick={event => props.popUp(element.id)}
             >
               <div className="plate-description-div">
                 <p className="plate-title">{element.title}</p>
