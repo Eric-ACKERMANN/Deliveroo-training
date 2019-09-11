@@ -5,7 +5,7 @@ import ClickListener from "./ClickListener.js";
 export default function PopUpMenu({ cancelPopUpMenu }) {
   const headerButtons = [
     {
-      className: "x-btn",
+      className: "btn-x",
       children: [<i class="fas fa-times" />],
       handleClickButton: cancelPopUpMenu
     }

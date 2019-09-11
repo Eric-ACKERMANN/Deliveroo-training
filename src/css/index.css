@@ -12,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --background-color-main: #fefefe;
+  --background-color-second: #f4f5f5;
   --font-family-main: "IBM Plex Sans";
   --font-family-second: "Stratos Deliveroo Web";
   --color-main: #2e3333;
@@ -43,7 +44,7 @@ code {
 }
 
 /******* BUTTON THEME *******/
-.nav-btn {
+.btn-header {
   padding: 8px 16px;
   line-height: 24px;
   cursor: pointer;
@@ -57,23 +58,23 @@ code {
   transition: all 0.3s;
 }
 
-.nav-btn i {
+.btn-header i {
   margin-right: 10px;
   color: var(--color-second);
 }
 
-.nav-btn:hover {
+.btn-header:hover {
   border-color: var(--border-color-hover);
   transition: all 0s;
 }
 
-.nav-btn:focus {
+.btn-header:focus {
   border-color: var(--color-second);
   box-shadow: var(--box-shadow-focus);
   transition: all 0.2s;
 }
 
-.x-btn {
+.btn-x {
   color: var(--color-second);
   border: none;
   font-size: 28px;
@@ -85,7 +86,7 @@ code {
   transition: all 0.3s;
 }
 
-.x-btn:focus {
+.btn-x:focus {
   border-color: var(--color-second);
   box-shadow: var(--box-shadow-focus);
   transition: all 0.2s;
@@ -190,17 +191,32 @@ header div button:nth-of-type(2) {
   border: 1px solid var(--color-second);
   box-shadow: var(--box-shadow-focus);
 }
-/* RESTAURANT DESCRIPTION */
-.restaurant-centered {
-  width: 98vw;
-  max-width: 1120px;
-  margin: 0 auto;
+
+/********************************************/
+/****************** RESTAURANT **************/
+/********************************************/
+
+.restaurant {
   padding: 20px 16px 25px 16px;
   display: flex;
   flex-direction: row;
 }
 
-.restaurant-titre {
+.leftBlock {
+  flex: 2;
+  margin: 0px 10px 0px 0px;
+}
+
+.rightBlock {
+  height: 165px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0px 0px 0px 10px;
+}
+
+.restaurant div h2 {
   font-size: 28px;
   line-height: 28px;
   color: #2e3333;
@@ -208,151 +224,109 @@ header div button:nth-of-type(2) {
   letter-spacing: -1px;
 }
 
-.restaurant-blocDescription {
-  flex: 2;
-}
-.restaurant-description {
+.restaurant div p {
   font-size: 14px;
   line-height: 19px;
   color: #828585;
 }
 
-.test {
-  height: 165px;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-.restaurant-logo {
-  height: 100%;
+.restaurant img {
+  display: block;
+  height: auto;
   width: 100%;
   object-fit: cover;
 }
-/* NAVIGATOR */
+
+/********************************************/
+/****************** MENU ********************/
+/********************************************/
+
+.menuBlock {
+  background-color: var(--background-color-second);
+}
+
+.menu {
+  padding: 20px 16px 25px 16px;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--background-color-second);
+}
+
+/********************************************/
+/****************** NAVIGATOR **************/
+/********************************************/
+
 nav {
-  border-top: solid 2px #e7ebeb;
-  height: 50px;
-  padding-right: 5px;
-  background-color: white;
-  display: flex;
-}
-
-.container-nav {
-  width: 98vw;
-  max-width: 1120px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  overflow: visible;
-}
-
-.nav-list {
-  display: flex;
-  justify-content: flex-start;
-  list-style: none;
-  font-size: 14px;
-  line-height: 19px;
-  color: #00b8a9;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-weight: 600;
-  padding: 0;
-  flex: 2;
-}
-
-.nav-list > li {
-  margin: 0px 20px;
-}
-
-.nav-right {
-  flex: 1;
-  background-color: red;
-}
-
-/* MENU */
-.menu-background {
-  background-color: #f4f5f5;
-}
-.menu-centered {
-  width: 98vw;
-  max-width: 1120px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  padding: 0px 16px;
-}
-
-.menusType {
-  width: 65%;
-}
-
-/* NAVIGATOR */
-.nav-sticky {
+  border-top: solid 1px #e7ebeb;
+  background-color: var(--background-color-main);
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
 }
 
-nav {
-  border-top: solid 2px #e7ebeb;
-  height: 50px;
-  padding-right: 5px;
-}
-
-.container-nav {
-  width: 1120px;
-  margin: auto;
+.navigator {
+  padding: 10px 16px 10px 16px;
   display: flex;
   flex-direction: row;
-  overflow: visible;
+  height: 20px;
 }
 
-.nav-list {
+.navigator ul {
+  list-style: none;
   display: flex;
   justify-content: flex-start;
-  list-style: none;
   font-size: 14px;
   line-height: 19px;
   color: #00b8a9;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: var(--font-family-main);
   font-weight: 600;
   padding: 0;
-  flex: 2;
+  margin: 0;
+  flex: 1;
 }
 
-.nav-list > li {
+.navigator li {
   margin: 0px 20px;
 }
 
-/*PANIER */
+.navigator .rightBlock {
+  position: relative;
+}
 
-.panier-centered {
+/********************************************/
+/****************** PANIER ******************/
+/********************************************/
+
+.panier {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
-  position: relative;
+  position: absolute;
   background-color: white;
   box-shadow: 0px 15px 15px 5px rgba(224, 224, 224, 0.5);
-}
-
-.panier-sticky {
-  position: -webkit-sticky;
-  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 /* EMPTY BASKET */
 
-.panier-empty-button {
-  width: 100%;
-  height: 45px;
+.btn-active,
+.btn-inactive {
   text-align: center;
   font-size: 16px;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
   line-height: 16px;
-  color: #6d7777;
   border-radius: 2px;
+}
+.btn-active {
+  color: white;
+  background-color: #00ccbc;
+}
+
+.btn-inactive {
+  color: #6d7777;
   background-color: #bac3c3;
 }
 
@@ -377,19 +351,6 @@ nav {
 .basket-element {
   display: flex;
   flex-direction: row;
-}
-
-/* MENUS PARTIE GAUCHE */
-.menu-left {
-  flex: 2;
-}
-
-/* MENUS PARTIE DROITE */
-.menu-right {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-content: center;
 }
 
 /********* MEALS *********/

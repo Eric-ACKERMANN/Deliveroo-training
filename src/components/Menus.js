@@ -6,10 +6,10 @@ export default function Menu({ menus, setPopUp, basket }) {
   const menuTitles = Object.keys(menus);
 
   return (
-    <div className="menu-background">
+    <div className="menuBlock">
       <Navigator menuTitles={menuTitles} basket={basket} />
-      <div className="menu-centered">
-        <div className="menu-left">
+      <div className="container menu">
+        <div className="leftBlock">
           {menuTitles.map((menuTitle, index) => {
             return (
               <Meals
@@ -22,7 +22,7 @@ export default function Menu({ menus, setPopUp, basket }) {
           })}
           ;
         </div>
-        <div className="menu-right" />
+        <div className="rightBlock" />
       </div>
     </div>
   );

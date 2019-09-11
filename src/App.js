@@ -77,7 +77,7 @@ class App extends React.Component {
     } else {
       arr.push(toto);
     }
-    this.setState({ basket: arr, popUp: { display: false } });
+    this.setState({ basket: arr, popUp: { display: false }, quantity: 1 });
   };
 
   /********** POPUP MENU ***********/
@@ -91,7 +91,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.menus);
     if (this.state.infoLoading === true) {
       return <Loading />;
     }
@@ -103,14 +102,14 @@ class App extends React.Component {
 
     const headerButtons = [
       {
-        className: "nav-btn",
+        className: "btn-header",
         children: [
           <i className="fas fa-shopping-basket" />,
           <span>0,00 €</span>
         ]
       },
       {
-        className: "nav-btn",
+        className: "btn-header",
         children: [<i className="fas fa-bars" />, <span>Menu</span>],
         handleClickButton: this.setPopUpMenu
       }

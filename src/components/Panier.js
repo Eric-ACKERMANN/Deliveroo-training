@@ -1,13 +1,12 @@
 import React from "react";
 import QuantityButton from "./QuantityButton";
+import Button from "./Button";
 
 function Panier(props) {
   if (props.basket.length === 0) {
     return (
-      <div className="panier-centered panier-sticky">
-        <div className="panier-empty-button">
-          <p>Valider mon panier</p>
-        </div>
+      <div className="panier">
+        <Button className="btn-inactive">Valider mon panier</Button>
         <div className="panier-empty">
           <p>Votre panier est vide</p>
         </div>
@@ -19,10 +18,8 @@ function Panier(props) {
       somme = somme + Number(props.basket[i].price);
     }
     return (
-      <div className="panier-centered panier-sticky">
-        <div className="panier-empty-button notEmpty">
-          <p>Valider mon panier</p>
-        </div>
+      <div className="panier">
+        <Button className="btn-active">Valider mon panier</Button>
         <div className="panier-quantite">
           <div>
             {props.basket.map(element => {
