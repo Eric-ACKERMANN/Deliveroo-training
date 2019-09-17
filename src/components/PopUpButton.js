@@ -1,7 +1,7 @@
 import React from "react";
 
 function PopUpButton(props) {
-  let totalPrice = props.quantity * Number(props.price).toFixed(2);
+  let totalPrice = Number(props.quantity) * Number(props.price);
   if (props.value === "Annuler") {
     return (
       <div className="cancelButton" onClick={() => props.cancelClick()}>
@@ -11,7 +11,7 @@ function PopUpButton(props) {
   } else {
     return (
       <div className="totalButton" onClick={() => props.plateValidation()}>
-        {`${props.value} ${totalPrice} €`}
+        {`${props.value} ${totalPrice.toFixed(2)} €`}
       </div>
     );
   }

@@ -1,28 +1,38 @@
 import React from "react";
-import Panier from "./Panier";
+import BasketNotEmpty from "./Basket/BasketNotEmpty";
+import BasketEmpty from "./Basket/BasketEmpty";
 
-function Navigator(props) {
+function Navigator({ menuTitles, basket, price, modifyQuantity, setTips }) {
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <ul className="nav-list">
             <li>
-              <a href={`#${props.menuTitles[0]}`}>{props.menuTitles[0]}</a>
+              <a href={`#${menuTitles[0]}`}>{menuTitles[0]}</a>
             </li>
             <li>
-              <a href={`#${props.menuTitles[1]}`}>{props.menuTitles[1]}</a>
+              <a href={`#${menuTitles[1]}`}>{menuTitles[1]}</a>
             </li>
             <li>
-              <a href={`#${props.menuTitles[2]}`}>{props.menuTitles[2]}</a>
+              <a href={`#${menuTitles[2]}`}>{menuTitles[2]}</a>
             </li>
             <li>
-              <a href={`#${props.menuTitles[3]}`}>{props.menuTitles[3]}</a>
+              <a href={`#${menuTitles[3]}`}>{menuTitles[3]}</a>
             </li>
           </ul>
         </div>
         <div className="rightBlock">
-          <Panier basket={props.basket} />
+          {basket.length > 0 ? (
+            <BasketNotEmpty
+              basket={basket}
+              price={price}
+              modifyQuantity={modifyQuantity}
+              setTips={setTips}
+            />
+          ) : (
+            <BasketEmpty />
+          )}
         </div>
       </div>
     </nav>

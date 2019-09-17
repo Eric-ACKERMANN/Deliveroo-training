@@ -36,6 +36,14 @@ code {
     monospace;
 }
 
+button {
+  outline: none;
+}
+
+svg:hover {
+  cursor: pointer;
+}
+
 .container {
   padding: 0px 16px;
   max-width: var(--container-width);
@@ -50,7 +58,6 @@ code {
   cursor: pointer;
   border: 1px solid var(--border-color);
   margin: 16px 0px;
-  outline: none;
   font-size: 16px;
   color: var(--color-main);
   font-family: var(--font-family-main);
@@ -86,10 +93,33 @@ code {
   transition: all 0.3s;
 }
 
-.btn-x:focus {
+.btn-x:focus,
+.btn-active:focus {
   border-color: var(--color-second);
   box-shadow: var(--box-shadow-focus);
   transition: all 0.2s;
+}
+
+.btn-active,
+.btn-inactive {
+  text-align: center;
+  font-size: 16px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  line-height: 16px;
+  border-radius: 2px;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-active {
+  color: white;
+  background-color: #00ccbc;
+}
+
+.btn-inactive {
+  color: #8c9b9b;
+  background-color: #bac3c3;
 }
 
 /* HEADER */
@@ -271,13 +301,13 @@ nav {
   height: 20px;
 }
 
-.navigator ul {
+.navigator .leftBlock ul {
   list-style: none;
+
   display: flex;
   justify-content: flex-start;
   font-size: 14px;
   line-height: 19px;
-  color: #00b8a9;
   font-family: var(--font-family-main);
   font-weight: 600;
   padding: 0;
@@ -285,22 +315,22 @@ nav {
   flex: 1;
 }
 
-.navigator li {
+.navigator .leftBlock li a {
   margin: 0px 20px;
+  text-decoration: none;
+  color: #00b8a9;
 }
 
 .navigator .rightBlock {
   position: relative;
+  flex: 1;
 }
 
 /********************************************/
 /****************** PANIER ******************/
 /********************************************/
 
-.panier {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.basket {
   position: absolute;
   background-color: white;
   box-shadow: 0px 15px 15px 5px rgba(224, 224, 224, 0.5);
@@ -308,51 +338,168 @@ nav {
   left: 0;
   width: 100%;
 }
-
-/* EMPTY BASKET */
-
-.btn-active,
-.btn-inactive {
-  text-align: center;
-  font-size: 16px;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-weight: 600;
-  line-height: 16px;
-  border-radius: 2px;
+.basket-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
 }
-.btn-active {
-  color: white;
-  background-color: #00ccbc;
-}
-
-.btn-inactive {
-  color: #6d7777;
-  background-color: #bac3c3;
-}
-
-.panier-empty {
+.basket-empty {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 120px;
-  width: 100%;
   font-size: 16px;
   font-family: "IBM Plex Sans", sans-serif;
   line-height: 22px;
-  color: #828585;
+  color: var(--color-third);
 }
 
-.notEmpty {
-  color: white;
-  background-color: #00ccbc;
+.basket-button {
+  height: 50px;
+  border-radius: 5px;
 }
 
-/* NOT EMPTY BASKET */
 .basket-element {
   display: flex;
   flex-direction: row;
 }
 
+.basket ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0 0;
+  padding: 0;
+}
+
+.basket ul li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family-main);
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--color-main);
+}
+
+.basket ul li:last-child {
+  padding: 16px 0px;
+}
+
+.basket ul li a {
+  color: var(--color-second);
+  text-decoration: none;
+}
+
+/**** BASKETMEALCARD *****/
+.basket-mealcard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.basket-mealcard:nth-child(n + 2) {
+  margin-top: 25px;
+}
+
+.basket-mealcard .counter {
+  flex: 0 0 60px;
+  margin-right: 16px;
+}
+
+.basket-mealcard .counter span {
+  color: var(--color-third);
+}
+
+.basket-mealcard > span:nth-child(2) {
+  flex: 1 1 auto;
+  text-align: left;
+  margin-right: 8px;
+}
+
+.basket-mealcard > span:nth-child(3) {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+/* BEFORE TOTAL */
+.basket-before-total {
+  border-top: 1px solid var(--border-color);
+}
+
+.basket-before-total .basket-recipe-element:first-child {
+  padding: 24px 0px 6px 0px;
+}
+
+.basket-before-total .basket-recipe-element:last-child {
+  padding: 6px 0px 16px 0px;
+}
+
+/* TOTAL */
+.basket-total {
+  box-shadow: 0px -3px 6px -2px rgba(0, 0, 0, 0.07);
+}
+
+.basket-total .basket-recipe-element:first-child {
+  padding: 24px 16px 6px 16px;
+}
+.basket-total .basket-recipe-element:last-child {
+  font-weight: 600;
+  padding: 6px 16px 16px 16px;
+}
+
+/**** BASKET RECIPE ELEMENT *****/
+.basket-recipe-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--color-main);
+  font-family: var(--font-family-main);
+  font-size: 16px;
+}
+
+.basket-recipe-element span:nth-child(1) {
+  margin-right: auto;
+}
+
+.basket-recipe-element .counter {
+  margin-right: 20px;
+}
+
+.basket-recipe-element span:nth-child(3) {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.basket-recipe-element .counter span {
+  margin: 0px 10px;
+}
+
+.basket-recipe-element a {
+  color: var(--color-second);
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 1ch;
+}
+
+/**** COUNTER *****/
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.counter span {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 /********* MEALS *********/
 .meals {
   display: flex;
@@ -531,8 +678,7 @@ nav {
 
 /* PopUpScreen Button */
 /* Button to select quantity */
-
-.popUp-quantity-button {
+.popUp-container svg {
   margin: 0px 60px;
 }
 

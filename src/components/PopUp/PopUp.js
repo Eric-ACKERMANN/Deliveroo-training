@@ -1,7 +1,8 @@
 import React from "react";
 import PopUpButton from "../PopUpButton";
-import QuantityButton from "../QuantityButton";
+
 import ClickListener from "./ClickListener";
+import Counter from "../Counter";
 
 export default function PopUp({
   dish,
@@ -23,15 +24,14 @@ export default function PopUp({
           )}
           <p className="popUp-plate-title">{dish.title}</p>
           <p className="popUp-plate-description">{dish.description}</p>
-          <div className="popUp-plate-quantity">
-            <QuantityButton
-              type={"-"}
-              quantity={quantity}
-              quantityClick={e => setQuantity(e)}
-            />
-            <p className="popUp-plate-quantity">{quantity}</p>
-            <QuantityButton type={"+"} quantityClick={e => setQuantity(e)} />
-          </div>
+          <Counter
+            className="popUp-plate-quantity"
+            quantityClick={setQuantity}
+            quantity={quantity}
+            svg={{ height: 22, width: 22 }}
+          >
+            {quantity}
+          </Counter>
         </div>
         <div className="popUp-plate-lower">
           <PopUpButton value={"Annuler"} cancelClick={() => togglePopUp()} />
