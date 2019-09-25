@@ -2,23 +2,58 @@ import React from "react";
 import BasketNotEmpty from "./Basket/BasketNotEmpty";
 import BasketEmpty from "./Basket/BasketEmpty";
 
-function Navigator({ menuTitles, basket, price, modifyQuantity, setTips }) {
+function Navigator({
+  menuTitles,
+  basket,
+  price,
+  modifyQuantity,
+  setTips,
+  positionOfWindow
+}) {
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <ul className="nav-list">
             <li>
-              <a href={`#${menuTitles[0]}`}>{menuTitles[0]}</a>
+              <a
+                className={
+                  positionOfWindow === 0 ? "nav-selected" : "nav-unselected"
+                }
+                href={`#${menuTitles[0]}`}
+              >
+                {menuTitles[0]}
+              </a>
             </li>
             <li>
-              <a href={`#${menuTitles[1]}`}>{menuTitles[1]}</a>
+              <a
+                className={
+                  positionOfWindow === 1 ? "nav-selected" : "nav-unselected"
+                }
+                href={`#${menuTitles[1]}`}
+              >
+                {menuTitles[1]}
+              </a>
             </li>
             <li>
-              <a href={`#${menuTitles[2]}`}>{menuTitles[2]}</a>
+              <a
+                className={
+                  positionOfWindow === 2 ? "nav-selected" : "nav-unselected"
+                }
+                href={`#${menuTitles[2]}`}
+              >
+                {menuTitles[2]}
+              </a>
             </li>
             <li>
-              <a href={`#${menuTitles[3]}`}>{menuTitles[3]}</a>
+              <a
+                className={
+                  positionOfWindow === 3 ? "nav-selected" : "nav-unselected"
+                }
+                href={`#${menuTitles[3]}`}
+              >
+                {menuTitles[3]}
+              </a>
             </li>
           </ul>
         </div>

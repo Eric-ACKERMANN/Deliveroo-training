@@ -12,8 +12,12 @@ class App extends React.Component {
   state = {
     restaurantInfo: null,
     menus: null,
+    menusElement: null,
     infoLoading: true,
-    popUp: { display: false, dish: null },
+    popUp: {
+      display: false,
+      dish: { picture: "", title: "", dsecription: "" }
+    },
     popUpMenu: { display: false },
     quantity: 1,
     basket: [],
@@ -27,22 +31,13 @@ class App extends React.Component {
 
   fetchAPI = async () => {
     const response = await axios.get("https://deliveroo-api.now.sh/menu");
-    // On met les prix a 2 après la virgule
-    if (response.data) {
-      let menuTitle = Object.keys(response.data.menu);
 
-      menuTitle.forEach(title => {
-        let meal = response.data.menu[title];
-        if (meal.length > 0) {
-          meal.forEach(e => {
-            e.price = Number(e.price)
-              .toFixed(2)
-              .toString();
-          });
-        }
-      });
+    const menuTitles = Object.keys(response.data.menu);
+    for (let i = 0; i < menuTitles.length; i++) {
+      if (response.data.menu[menuTitles[i]].length < 1) {
+        delete response.data.menu[menuTitles[i]];
+      }
     }
-
     this.setState({
       restaurantInfo: response.data.restaurant,
       menus: response.data.menu,
@@ -159,7 +154,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.basket);
     if (this.state.infoLoading === true) {
       return <Loading />;
     }
@@ -180,8 +174,8 @@ class App extends React.Component {
       {
         className: "btn-header",
         children: [
-          <i className="fas fa-shopping-basket" />,
-          <span>{`${totalPrice
+          <i key={0} className="fas fa-shopping-basket" />,
+          <span key={1}>{`${totalPrice
             .toFixed(2)
             .toString()
             .replace(".", ",")} €`}</span>
@@ -189,13 +183,16 @@ class App extends React.Component {
       },
       {
         className: "btn-header",
-        children: [<i className="fas fa-bars" />, <span>Menu</span>],
+        children: [
+          <i key={0} className="fas fa-bars" />,
+          <span key={1}>Menu</span>
+        ],
         handleClickButton: this.setPopUpMenu
       }
     ];
 
     return (
-      <div>
+      <div ref={ref => (this._app = ref)}>
         <Header
           img={
             "https://consumer-component-library.roocdn.com/11.3.1/static/images/logo-teal.64a39561252047a022e5ce0929c75374.svg"
@@ -204,16 +201,17 @@ class App extends React.Component {
           buttons={headerButtons}
           totalPrice={this.state.price}
         />
-        {this.state.popUp.display && (
-          <PopUp
-            plateId={this.state.popUp.plateId}
-            dish={this.state.popUp.dish}
-            quantity={this.state.quantity}
-            setQuantity={this.handleClickQuantity}
-            togglePopUp={this.togglePopUp}
-            setValidation={this.handleClickValidation}
-          />
-        )}
+
+        <PopUp
+          plateId={this.state.popUp.plateId}
+          dish={this.state.popUp.dish}
+          quantity={this.state.quantity}
+          setQuantity={this.handleClickQuantity}
+          togglePopUp={this.togglePopUp}
+          popUpDisplayBoolean={this.state.popUp.display}
+          setValidation={this.handleClickValidation}
+        />
+
         {this.state.popUpMenu.display && (
           <PopUpMenu
             popUpMenu={this.state.popUpMenu}
@@ -237,7 +235,7 @@ class App extends React.Component {
       </div>
     );
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchAPI();
   }
 }

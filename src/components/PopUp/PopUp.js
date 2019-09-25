@@ -9,40 +9,60 @@ export default function PopUp({
   quantity,
   setQuantity,
   togglePopUp,
-  setValidation
+  setValidation,
+  popUpDisplayBoolean
 }) {
   return (
-    <div className="popUp-container">
-      <ClickListener className="popUp-plate-container" onClick={togglePopUp}>
-        <div className="popUp-plate-upper">
-          {dish.picture && (
-            <img
-              className="popUp-plate-image"
-              src={dish.picture}
-              alt={`${dish.title}`}
-            />
-          )}
-          <p className="popUp-plate-title">{dish.title}</p>
-          <p className="popUp-plate-description">{dish.description}</p>
-          <Counter
-            className="popUp-plate-quantity"
-            quantityClick={setQuantity}
-            quantity={quantity}
-            svg={{ height: 22, width: 22 }}
-          >
-            {quantity}
-          </Counter>
-        </div>
-        <div className="popUp-plate-lower">
-          <PopUpButton value={"Annuler"} cancelClick={() => togglePopUp()} />
-          <PopUpButton
-            value={"Total"}
-            quantity={quantity}
-            price={Number(dish.price).toFixed(2)}
-            plateValidation={() => setValidation(dish)}
-          />
-        </div>
-      </ClickListener>
+    <div
+      className={
+        popUpDisplayBoolean
+          ? "popUp-container moves-in1"
+          : "popUp-container no-visibility"
+      }
+    >
+      <div
+        className={
+          popUpDisplayBoolean
+            ? "popUp-plate-container moves-in2"
+            : "popUp-plate-container no-visibility"
+        }
+      >
+        {popUpDisplayBoolean && (
+          <ClickListener onClick={togglePopUp}>
+            <div className="popUp-plate-upper">
+              {dish.picture && (
+                <img
+                  className="popUp-plate-image"
+                  src={dish.picture}
+                  alt={`${dish.title}`}
+                />
+              )}
+              <p className="popUp-plate-title">{dish.title}</p>
+              <p className="popUp-plate-description">{dish.description}</p>
+              <Counter
+                className="popUp-plate-quantity"
+                quantityClick={setQuantity}
+                quantity={quantity}
+                svg={{ height: 22, width: 22 }}
+              >
+                {quantity}
+              </Counter>
+            </div>
+            <div className="popUp-plate-lower">
+              <PopUpButton
+                value={"Annuler"}
+                cancelClick={() => togglePopUp()}
+              />
+              <PopUpButton
+                value={"Total"}
+                quantity={quantity}
+                price={Number(dish.price).toFixed(2)}
+                plateValidation={() => setValidation(dish)}
+              />
+            </div>
+          </ClickListener>
+        )}
+      </div>
     </div>
   );
 }
