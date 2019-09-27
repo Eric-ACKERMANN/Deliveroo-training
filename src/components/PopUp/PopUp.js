@@ -1,7 +1,7 @@
 import React from "react";
 import PopUpButton from "../PopUpButton";
 
-import ClickListener from "./ClickListener";
+import ClickListener from "../ClickListener";
 import Counter from "../Counter";
 
 export default function PopUp({

@@ -223,28 +223,30 @@ header div button:nth-of-type(2) {
   box-shadow: var(--box-shadow-focus);
 }
 
+.leftBlock {
+  flex: 0 1 67%;
+  max-width: 67%;
+}
+
+.rightBlock {
+  flex: 0 0 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
 /********************************************/
 /****************** RESTAURANT **************/
 /********************************************/
 
 .restaurant {
-  padding: 20px 16px 25px 16px;
+  padding: 20px 16px 20px 16px;
   display: flex;
   flex-direction: row;
 }
 
-.leftBlock {
-  flex: 2;
-  margin: 0px 10px 0px 0px;
-}
-
-.rightBlock {
+.restaurant .rightBlock {
   height: 165px;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin: 0px 0px 0px 10px;
 }
 
 .restaurant div h2 {
@@ -296,32 +298,87 @@ nav {
 }
 
 .navigator {
-  padding: 10px 16px 10px 16px;
+  padding: 0px 16px 0px 16px;
   display: flex;
   flex-direction: row;
-  height: 20px;
 }
 
-.navigator .leftBlock ul {
-  list-style: none;
+.navigator .leftBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navigator .rightBlock {
+  position: relative;
+}
+
+.navigator .shownTitles {
   display: flex;
   justify-content: flex-start;
   font-size: 14px;
   line-height: 19px;
   font-family: var(--font-family-main);
   font-weight: 500;
-  padding: 0;
-  margin: 0;
-  flex: 1;
+  flex: 0 1 100%;
+  overflow: hidden;
 }
 
-.navigator .leftBlock li a {
+.navigator .hiddenTitlesBlock {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 24px;
+  margin-right: 24px;
+  flex: 0 0 167px;
+  align-items: center;
+  color: #00ccbc;
+  font-size: 14px;
+  line-height: 19px;
+  position: relative;
+}
+
+.navigator .hiddenTitlesBlock span {
+  padding-right: 10px;
+}
+
+.navigator .hiddenTitles-dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 100%;
+  right: 0;
+  border-radius: 5px;
+  border: 1px solid #bac3c3;
+  overflow: hidden;
+}
+
+.navigator .hiddenTitles-dropdown a {
+  text-decoration: none;
+  background-color: var(--background-color-main);
+
+  font-size: 16px;
+  line-height: 16px;
+  color: var(--color-main);
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navigator .hiddenTitles-dropdown a:hover {
+  background-color: #f5f7f9;
+}
+
+.navigator .hiddenTitles-dropdown span:last-child {
+  border-bottom: none;
+}
+
+.nav-link {
   text-decoration: none;
   border-radius: 50px;
   padding: 4px 16px;
   white-space: nowrap;
   font-size: 14px;
   line-height: 19px;
+  margin: 6px 0px;
 }
 
 .nav-selected {
@@ -334,11 +391,6 @@ nav {
   color: #00ccbc;
   background-color: var(--color-white);
   font-weight: 500;
-}
-
-.navigator .rightBlock {
-  position: relative;
-  flex: 1;
 }
 
 /********************************************/
@@ -519,7 +571,7 @@ nav {
 .meals {
   display: flex;
   flex-direction: column;
-  padding: 0px 0px 0px 0px;
+  padding: 0px 24px 0px 0px;
   flex: 1;
   min-width: 360px;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import Restaurant from "./components/Restaurant";
-import Menus from "./components/Menus";
+import Menus from "./components/Menus/Menus";
 import PopUpMenu from "./components/PopUpMenu";
 import Loading from "./components/Loading";
 import PopUp from "./components/PopUp";
@@ -32,12 +32,12 @@ class App extends React.Component {
   fetchAPI = async () => {
     const response = await axios.get("https://deliveroo-api.now.sh/menu");
 
-    const menuTitles = Object.keys(response.data.menu);
-    for (let i = 0; i < menuTitles.length; i++) {
-      if (response.data.menu[menuTitles[i]].length < 1) {
-        delete response.data.menu[menuTitles[i]];
-      }
-    }
+    // const menuTitles = Object.keys(response.data.menu);
+    // for (let i = 0; i < menuTitles.length; i++) {
+    //   if (response.data.menu[menuTitles[i]].length < 1) {
+    //     delete response.data.menu[menuTitles[i]];
+    //   }
+    // }
     this.setState({
       restaurantInfo: response.data.restaurant,
       menus: response.data.menu,

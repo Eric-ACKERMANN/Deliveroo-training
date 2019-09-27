@@ -28,9 +28,9 @@ export default class NativeClickListener extends React.Component {
   };
 
   render() {
-    const { className } = this.props;
+    const { className, id } = this.props;
     return (
-      <div className={className} ref={ref => (this._container = ref)}>
+      <div id={id} className={className} ref={ref => (this._container = ref)}>
         {this.props.children}
       </div>
     );
