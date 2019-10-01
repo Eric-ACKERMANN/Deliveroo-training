@@ -29,6 +29,7 @@ export default function Navigator({
   //     );
   //   });
   // };
+  console.log("navigator render");
   return (
     <nav>
       <div className="container navigator">
