@@ -1,7 +1,6 @@
 import React from "react";
 import Meals from "../Meals";
 import Navigator from "../Navigator";
-import { callbackify } from "util";
 
 export default class Menu extends React.Component {
   state = {
@@ -33,44 +32,6 @@ export default class Menu extends React.Component {
 
   setPosition = e => {
     this.setState({ position: e });
-  };
-
-  handleScrollPosition = () => {
-    const menuElements = this.state.menuElements;
-    let positionY = window.scrollY;
-    let parameter = 100;
-    let loli = document.getElementById("loli");
-    let hiddenTitleDOMElement = document.getElementById(
-      "hiddenTitles-nav-element"
-    );
-    let bool = this.state.positionForced.bool;
-    for (let i = 0; i < menuElements.length; i++) {
-      if (bool) {
-        let position = this.state.positionForced.index;
-        if (i === position) {
-          bool = false;
-        } else {
-          break;
-        }
-      }
-      let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
-      if (
-        menuElements[i].top - parameter <= positionY &&
-        menuElements[i].bottom - parameter >= positionY
-      ) {
-        navTitleDOMElement.classList.add("nav-selected");
-
-        if (navTitleDOMElement.classList.contains("no-visibility")) {
-          loli.innerHTML = menuElements[i].title;
-          hiddenTitleDOMElement.classList.add("nav-selected");
-        } else {
-          loli.innerHTML = "Plus";
-          hiddenTitleDOMElement.classList.remove("nav-selected");
-        }
-      } else {
-        navTitleDOMElement.classList.remove("nav-selected");
-      }
-    }
   };
 
   getDOMBorder = (id, border) => {
@@ -136,6 +97,63 @@ export default class Menu extends React.Component {
     this.handleWindowResize();
   };
 
+  setIntersectionObserver = () => {
+    const options = {
+      root: null,
+      rootMargin: "-20% 0px -80% 0px",
+      threshold: 0
+    };
+
+    const menuTitles = Object.keys(this.props.menus);
+    for (let i = 0; i < menuTitles.length; i++) {
+      menuTitles[i] = {
+        title: menuTitles[i],
+        intersection: false
+      };
+    }
+
+    let callback = function(entries) {
+      entries.forEach(entry => {
+        let position;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = true;
+              position = i;
+              break;
+            }
+          }
+        } else {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = false;
+              position = i;
+              break;
+            }
+          }
+        }
+        if (menuTitles[position].intersection) {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.add("nav-selected");
+        } else {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.remove("nav-selected");
+        }
+      });
+    };
+
+    const observer1 = new IntersectionObserver(callback, options);
+
+    let menuHTMLElements = [];
+    for (let i = 0; i < menuTitles.length; i++) {
+      let DOMelement = document.getElementById(menuTitles[i].title);
+      observer1.observe(DOMelement);
+      menuHTMLElements.push(DOMelement);
+    }
+  };
+
   render() {
     const {
       menus,
@@ -147,6 +165,7 @@ export default class Menu extends React.Component {
     } = this.props;
 
     const menuTitles = Object.keys(menus);
+    console.log("Menus render");
     return (
       <div className="menuBlock">
         <Navigator
@@ -187,56 +206,9 @@ export default class Menu extends React.Component {
 
   componentDidMount() {
     this.getMenusDOMElements(this.props.menus);
-    this.handleFirstRender();
-
-    document.addEventListener("scroll", this.handleScrollPosition);
-    window.addEventListener("resize", this.handleWindowResize);
+    this.setIntersectionObserver();
+    console.log("hey");
   }
 
-  componentWillUnmount() {
-    document.removeEventListener("scroll");
-    window.removeEventListener("resize");
-  }
+  componentWillUnmount() {}
 }
-
-const setIntersectionObserver = () => {
-  let options = {
-    options1: { root: null, rootMargin: "-200px 0 0 0", threshold: 0 },
-    options2: {
-      root: null,
-      rootMargin: "0 0 calc(200px-100%) 0",
-      threshold: 0
-    }
-  };
-
-  let callback1 = function(entries, observer) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-        entry.target.classList.add("nav-selected");
-      } else {
-        entry.target.classList.remove("nav-selected");
-      }
-    });
-  };
-  let callback2 = function(entries, observer) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-        entry.target.classList.add("nav-selected");
-      } else {
-        entry.target.classList.remove("nav-selected");
-      }
-    });
-  };
-  const observer1 = new IntersectionObserver(callback1, options.options1);
-  const observer2 = new IntersectionObserver(callback2, options.options2);
-
-  const menuTitles = Object.keys(this.props.menus);
-  let menuHTMLElements = [];
-  for (let i = 0; i < menuTitles.length; i++) {
-    let DOMelement = document.getElementById(menuTitles[i]);
-    menuHTMLElements.push(DOMelement);
-  }
-
-  observer1.observe(menuHTMLElements);
-  observer2.observe(menuHTMLElements);
-};
