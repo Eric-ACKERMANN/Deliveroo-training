@@ -43,7 +43,8 @@ export default class Menu extends React.Component {
     let hiddenTitleDOMElement = document.getElementById(
       "hiddenTitles-nav-element"
     );
-    let bool = this.state.positionForced.bool;
+    let bool;
+    if (this.state.positionForced) bool = this.state.positionForced.bool;
     for (let i = 0; i < menuElements.length; i++) {
       if (bool) {
         let position = this.state.positionForced.index;
@@ -199,44 +200,44 @@ export default class Menu extends React.Component {
   }
 }
 
-const setIntersectionObserver = () => {
-  let options = {
-    options1: { root: null, rootMargin: "-200px 0 0 0", threshold: 0 },
-    options2: {
-      root: null,
-      rootMargin: "0 0 calc(200px-100%) 0",
-      threshold: 0
-    }
-  };
+// const setIntersectionObserver = () => {
+//   let options = {
+//     options1: { root: null, rootMargin: "-200px 0 0 0", threshold: 0 },
+//     options2: {
+//       root: null,
+//       rootMargin: "0 0 calc(200px-100%) 0",
+//       threshold: 0
+//     }
+//   };
 
-  let callback1 = function(entries, observer) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-        entry.target.classList.add("nav-selected");
-      } else {
-        entry.target.classList.remove("nav-selected");
-      }
-    });
-  };
-  let callback2 = function(entries, observer) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-        entry.target.classList.add("nav-selected");
-      } else {
-        entry.target.classList.remove("nav-selected");
-      }
-    });
-  };
-  const observer1 = new IntersectionObserver(callback1, options.options1);
-  const observer2 = new IntersectionObserver(callback2, options.options2);
+//   let callback1 = function(entries, observer) {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+//         entry.target.classList.add("nav-selected");
+//       } else {
+//         entry.target.classList.remove("nav-selected");
+//       }
+//     });
+//   };
+//   let callback2 = function(entries, observer) {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+//         entry.target.classList.add("nav-selected");
+//       } else {
+//         entry.target.classList.remove("nav-selected");
+//       }
+//     });
+//   };
+//   const observer1 = new IntersectionObserver(callback1, options.options1);
+//   const observer2 = new IntersectionObserver(callback2, options.options2);
 
-  const menuTitles = Object.keys(this.props.menus);
-  let menuHTMLElements = [];
-  for (let i = 0; i < menuTitles.length; i++) {
-    let DOMelement = document.getElementById(menuTitles[i]);
-    menuHTMLElements.push(DOMelement);
-  }
+//   const menuTitles = Object.keys(this.props.menus);
+//   let menuHTMLElements = [];
+//   for (let i = 0; i < menuTitles.length; i++) {
+//     let DOMelement = document.getElementById(menuTitles[i]);
+//     menuHTMLElements.push(DOMelement);
+//   }
 
-  observer1.observe(menuHTMLElements);
-  observer2.observe(menuHTMLElements);
-};
+//   observer1.observe(menuHTMLElements);
+//   observer2.observe(menuHTMLElements);
+// };
