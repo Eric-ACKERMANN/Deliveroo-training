@@ -10,11 +10,25 @@ export default function Navigator({
   modifyQuantity,
   setTips,
   positionOfWindow,
-  hiddenTitles,
   navDropDown,
   toggleDropDown,
   handleClickNavLink
 }) {
+  // const displayTitles = function(titles, className, id) {
+  //   return titles.map((e, index) => {
+  //     return (
+  //       <a
+  //         id={`${id}_${index}}`}
+  //         className={className}
+  //         onClick={() => handleClickNavLink(index)}
+  //         href={`#${e}`}
+  //         key={index}
+  //       >
+  //         {e}
+  //       </a>
+  //     );
+  //   });
+  // };
   return (
     <nav>
       <div className="container navigator">
@@ -23,14 +37,10 @@ export default function Navigator({
             {menuTitles.map((e, index) => {
               return (
                 <a
-                  onClick={() => handleClickNavLink(index)}
+                  onClick={event => handleClickNavLink(event.target.id, index)}
                   id={`shownTitles_${index}`}
                   key={index}
-                  className={
-                    positionOfWindow === index
-                      ? "nav-link nav-selected"
-                      : "nav-link nav-unselected"
-                  }
+                  className={"nav-link"}
                   href={`#${e}`}
                 >
                   {e}
@@ -41,6 +51,7 @@ export default function Navigator({
 
           <div id={`hiddenTitles`} className="hiddenTitlesBlock">
             <div
+              id={`hiddenTitles-nav-element`}
               onClick={toggleDropDown}
               className={
                 positionOfWindow >= menuTitles.length
@@ -48,11 +59,7 @@ export default function Navigator({
                   : "nav-link nav-unselected test"
               }
             >
-              <span>
-                {positionOfWindow >= menuTitles.length
-                  ? hiddenTitles[positionOfWindow - menuTitles.length]
-                  : "Plus"}
-              </span>
+              <span id={"loli"}>Plus</span>
               <i className="fas fa-chevron-down" />
             </div>
             {navDropDown && (
@@ -61,12 +68,12 @@ export default function Navigator({
                 onClick={toggleDropDown}
                 listenInside={true}
               >
-                {hiddenTitles.map((e, index) => {
+                {menuTitles.map((e, index) => {
                   return (
                     <a
-                      onClick={() =>
-                        handleClickNavLink(menuTitles.length + index)
-                      }
+                      id={`hiddenTitles_${index}`}
+                      className={"hiddenTitles-element"}
+                      onClick={() => handleClickNavLink(index)}
                       href={`#${e}`}
                       key={index}
                     >

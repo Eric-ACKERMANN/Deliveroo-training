@@ -352,7 +352,7 @@ nav {
   overflow: hidden;
 }
 
-.navigator .hiddenTitles-dropdown a {
+.hiddenTitles-element {
   text-decoration: none;
   background-color: var(--background-color-main);
 
@@ -379,18 +379,15 @@ nav {
   font-size: 14px;
   line-height: 19px;
   margin: 6px 0px;
+  color: #00ccbc;
+  background-color: var(--color-white);
+  font-weight: 500;
 }
 
 .nav-selected {
   color: var(--color-white);
   background-color: #00ccbc;
   font-weight: 600;
-}
-
-.nav-unselected {
-  color: #00ccbc;
-  background-color: var(--color-white);
-  font-weight: 500;
 }
 
 /********************************************/
@@ -688,6 +685,10 @@ nav {
 
 .no-visibility {
   visibility: hidden;
+}
+
+.no-display {
+  display: none;
 }
 
 .popUp-plate-container {

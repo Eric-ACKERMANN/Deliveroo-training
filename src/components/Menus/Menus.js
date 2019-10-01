@@ -6,16 +6,15 @@ export default class Menu extends React.Component {
   state = {
     menuElements: null,
     position: null,
-    positionForced: false,
+    positionForced: null,
     shownTitles: [],
     hiddenTitles: [],
     titlesDOM_R: [],
-    titlesDOM_L: [],
     titlesPosition: null,
     navDropDown: false
   };
 
-  getMenus = menus => {
+  getMenusDOMElements = menus => {
     const menuTitles = Object.keys(menus);
     let elementsArray = [];
     for (let i = 0; i < menuTitles.length; i++) {
@@ -23,6 +22,7 @@ export default class Menu extends React.Component {
         .getElementById(menuTitles[i])
         .getBoundingClientRect();
       elementsArray.push({
+        title: menuTitles[i],
         top: DOMelement.top + document.documentElement.scrollTop,
         bottom: DOMelement.bottom + document.documentElement.scrollTop
       });
@@ -34,114 +34,124 @@ export default class Menu extends React.Component {
     this.setState({ position: e });
   };
 
-  handleScrollPosition = () => {
-    let positionY = window.scrollY;
-    let parameter = 100;
-
-    let position = null;
-
-    if (this.state.positionForced) {
-      if (
-        this.state.menuElements[this.state.position].top - parameter <=
-          positionY &&
-        this.state.menuElements[this.state.position].bottom - parameter >=
-          positionY
-      ) {
-        this.setState({ positionForced: false });
-      }
-    } else {
-      for (let i = 0; i < this.state.menuElements.length; i++) {
-        if (
-          this.state.menuElements[i].top - parameter <= positionY &&
-          this.state.menuElements[i].bottom - parameter >= positionY
-        ) {
-          position = i;
-        }
-      }
-      if (position !== this.state.position) {
-        this.setPosition(position);
-      }
-    }
-  };
-
-  handleClickNavLink = position => {
-    this.setState({ position: position, positionForced: true });
-  };
-
   getDOMBorder = (id, border) => {
     const DOM_element = document.getElementById(id);
     return DOM_element.getBoundingClientRect()[border];
   };
 
+  getDOMBorderRelative = (block, container) => {
+    let blockDOMBorder = this.getDOMBorder(block.id, block.border);
+    let containerDOMBorder = this.getDOMBorder(container.id, container.border);
+    return blockDOMBorder - containerDOMBorder;
+  };
+
+  handleClickNavLink = async position => {
+    let positionForced = { bool: true, index: position };
+    await this.setState({ positionForced: positionForced });
+  };
+
   setStateRightLimits = menuTitles => {
     let titlesDOM_R = [];
-    let titlesDOM_L = [];
     // DOM Element of container
     const containerDOM_L = this.getDOMBorder("shownTitlesContainer", "left");
     for (let i = 0; i < menuTitles.length; i++) {
       // DOM element of a title
       const titleDOM_R = this.getDOMBorder(`shownTitles_${i}`, "right");
-      titlesDOM_R.push(8 * i + titleDOM_R - containerDOM_L);
+      titlesDOM_R.push(7 * i + titleDOM_R - containerDOM_L);
     }
 
-    this.setState({ titlesDOM_R: titlesDOM_R, titlesDOM_L: titlesDOM_L });
+    this.setState({ titlesDOM_R: titlesDOM_R });
     return titlesDOM_R;
   };
 
-  setShownTitles = (titlesDOM_R, menuTitles) => {
-    let hid_TitlesDOM_L = this.getDOMBorder(`hiddenTitles`, "left");
-    const containerDOM_L = this.getDOMBorder(`shownTitlesContainer`, "left");
-
-    hid_TitlesDOM_L = hid_TitlesDOM_L - containerDOM_L;
-
-    let shownTitles = [];
-    let hiddenTitles = [];
-    for (let i = 0; i < titlesDOM_R.length; i++) {
-      if (titlesDOM_R[i] < hid_TitlesDOM_L) {
-        shownTitles.push(menuTitles[i]);
-      } else {
-        hiddenTitles.push(menuTitles[i]);
-      }
-    }
-
-    this.setState({
-      shownTitles: shownTitles,
-      titlesPosition: shownTitles.length,
-      hiddenTitles: hiddenTitles
-    });
-  };
-
-  handleFirstRender = () => {
+  handleFirstRender = async () => {
     const menuTitles = Object.keys(this.props.menus);
     // Create the state withh all the right limits of blocks
-    const titlesDOM_R = this.setStateRightLimits(menuTitles);
-
-    // Change the state shownTitles to only show the titles that fit in block
-    this.setShownTitles(titlesDOM_R, menuTitles);
+    await this.setStateRightLimits(menuTitles);
+    this.handleWindowResize();
   };
 
   handleWindowResize = () => {
-    let hid_TitlesDOM_L = this.getDOMBorder(`hiddenTitles`, "left");
-    const containerDOM_L = this.getDOMBorder(`shownTitlesContainer`, "left");
-    hid_TitlesDOM_L = hid_TitlesDOM_L - containerDOM_L;
+    const hid_TitlesDOM_L = this.getDOMBorderRelative(
+      { id: "hiddenTitles", border: "left" },
+      { id: "shownTitlesContainer", border: "left" }
+    );
 
     const titlesDOM_R = this.state.titlesDOM_R;
-    const titlesPosition = this.state.titlesPosition;
+    for (let i = 0; i < titlesDOM_R.length; i++) {
+      let titleDOM = document.getElementById(`shownTitles_${i}`);
+      let hiddenTitleDOM = document.getElementById(`hiddenTitles_${i}`);
 
-    const interval = {
-      min: titlesPosition > 0 ? titlesDOM_R[titlesPosition - 1] : 0,
-      max:
-        titlesPosition < titlesDOM_R.length ? titlesDOM_R[titlesPosition] : 1500
-    };
-
-    if (hid_TitlesDOM_L <= interval.min || hid_TitlesDOM_L >= interval.max) {
-      const menuTitles = Object.keys(this.props.menus);
-      this.setShownTitles(titlesDOM_R, menuTitles);
+      if (hid_TitlesDOM_L - titlesDOM_R[i] < 0) {
+        titleDOM.classList.add("no-visibility");
+        hiddenTitleDOM && hiddenTitleDOM.classList.remove("no-display");
+      } else {
+        titleDOM.classList.remove("no-visibility");
+        hiddenTitleDOM && hiddenTitleDOM.classList.add("no-display");
+      }
     }
   };
 
-  toggleNavDropDown = () => {
-    this.setState({ navDropDown: !this.state.navDropDown });
+  toggleNavDropDown = async () => {
+    await this.setState({ navDropDown: !this.state.navDropDown });
+    this.handleWindowResize();
+  };
+
+  setIntersectionObserver = () => {
+    const options = {
+      root: null,
+      rootMargin: "-20% 0px -80% 0px",
+      threshold: 0
+    };
+
+    const menuTitles = Object.keys(this.props.menus);
+    for (let i = 0; i < menuTitles.length; i++) {
+      menuTitles[i] = {
+        title: menuTitles[i],
+        intersection: false
+      };
+    }
+
+    let callback = function(entries) {
+      entries.forEach(entry => {
+        let position;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = true;
+              position = i;
+              break;
+            }
+          }
+        } else {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = false;
+              position = i;
+              break;
+            }
+          }
+        }
+        if (menuTitles[position].intersection) {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.add("nav-selected");
+        } else {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.remove("nav-selected");
+        }
+      });
+    };
+
+    const observer1 = new IntersectionObserver(callback, options);
+
+    let menuHTMLElements = [];
+    for (let i = 0; i < menuTitles.length; i++) {
+      let DOMelement = document.getElementById(menuTitles[i].title);
+      observer1.observe(DOMelement);
+      menuHTMLElements.push(DOMelement);
+    }
   };
 
   render() {
@@ -194,15 +204,9 @@ export default class Menu extends React.Component {
   }
 
   componentDidMount() {
-    this.getMenus(this.props.menus);
-    this.handleFirstRender();
-
-    document.addEventListener("scroll", this.handleScrollPosition);
-    window.addEventListener("resize", this.handleWindowResize);
+    this.getMenusDOMElements(this.props.menus);
+    this.setIntersectionObserver();
   }
 
-  componentWillUnmount() {
-    document.removeEventListener("scroll");
-    window.removeEventListener("resize");
-  }
+  componentWillUnmount() {}
 }
