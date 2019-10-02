@@ -34,6 +34,7 @@ export default class Menu extends React.Component {
     this.setState({ position: e });
   };
 
+
   handleScrollPosition = () => {
     const menuElements = this.state.menuElements;
     let positionY = window.scrollY;
@@ -73,6 +74,7 @@ export default class Menu extends React.Component {
       }
     }
   };
+
 
   getDOMBorder = (id, border) => {
     const DOM_element = document.getElementById(id);
@@ -117,14 +119,14 @@ export default class Menu extends React.Component {
     for (let i = 0; i < menuTitles.length; i++) {
       // DOM element of a title
       const titleDOM_R = this.getDOMBorder(`shownTitles_${i}`, "right");
-      titlesDOM_R.push(7 * i + titleDOM_R - containerDOM_L);
+      titlesDOM_R.push(10 * i + titleDOM_R - containerDOM_L);
     }
 
     this.setState({ titlesDOM_R: titlesDOM_R });
     return titlesDOM_R;
   };
 
-  handleFirstRender = async () => {
+  handleWindowResize = async () => {
     const menuTitles = Object.keys(this.props.menus);
     // Create the state withh all the right limits of blocks
     await this.setStateRightLimits(menuTitles);
@@ -152,9 +154,73 @@ export default class Menu extends React.Component {
     }
   };
 
+  handleFirstRender = async () => {
+    const menuTitles = Object.keys(this.props.menus);
+    // Create the state withh all the right limits of blocks
+    await this.setStateRightLimits(menuTitles);
+    this.handleWindowResize();
+  };
+
   toggleNavDropDown = async () => {
     await this.setState({ navDropDown: !this.state.navDropDown });
     this.handleWindowResize();
+  };
+
+  setIntersectionObserver = () => {
+    const options = {
+      root: null,
+      rootMargin: "-20% 0px -80% 0px",
+      threshold: 0
+    };
+
+    const menuTitles = Object.keys(this.props.menus);
+    for (let i = 0; i < menuTitles.length; i++) {
+      menuTitles[i] = {
+        title: menuTitles[i],
+        intersection: false
+      };
+    }
+
+    let callback = function(entries) {
+      entries.forEach(entry => {
+        let position;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = true;
+              position = i;
+              break;
+            }
+          }
+        } else {
+          for (let i = 0; i < menuTitles.length; i++) {
+            if (menuTitles[i].title === entry.target.id) {
+              menuTitles[i].intersection = false;
+              position = i;
+              break;
+            }
+          }
+        }
+        if (menuTitles[position].intersection) {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.add("nav-selected");
+        } else {
+          document
+            .getElementById(`shownTitles_${position}`)
+            .classList.remove("nav-selected");
+        }
+      });
+    };
+
+    const observer1 = new IntersectionObserver(callback, options);
+
+    let menuHTMLElements = [];
+    for (let i = 0; i < menuTitles.length; i++) {
+      let DOMelement = document.getElementById(menuTitles[i].title);
+      observer1.observe(DOMelement);
+      menuHTMLElements.push(DOMelement);
+    }
   };
 
   render() {
@@ -188,12 +254,12 @@ export default class Menu extends React.Component {
         />
         <div className="container menu">
           <div className="leftBlock">
-            {menuTitles.map((menuTitle, index) => {
+            {menuTitles.map((menu, index) => {
               return (
                 <Meals
                   key={index}
-                  menuTitle={menuTitle}
-                  dishes={menus[menuTitle]}
+                  menu={menu}
+                  dishes={menus[menu]}
                   setPopUp={setPopUp}
                 />
               );
@@ -209,13 +275,11 @@ export default class Menu extends React.Component {
   componentDidMount() {
     this.getMenusDOMElements(this.props.menus);
     this.handleFirstRender();
-
-    document.addEventListener("scroll", this.handleScrollPosition);
+    this.setIntersectionObserver();
     window.addEventListener("resize", this.handleWindowResize);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("scroll");
     window.removeEventListener("resize");
   }
 }

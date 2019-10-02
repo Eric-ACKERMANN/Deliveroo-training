@@ -12,13 +12,16 @@ export default function Navigator({
   positionOfWindow,
   navDropDown,
   toggleDropDown,
-  handleClickNavLink
+  handleClickNavLink,
+  activeMenu
 }) {
+
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <div id={`shownTitlesContainer`} className="shownTitles">
+
             {menuTitles.map((e, index) => {
               return (
                 <a
@@ -32,6 +35,7 @@ export default function Navigator({
                 </a>
               );
             })}
+
           </div>
 
           <div id={`hiddenTitles`} className="hiddenTitlesBlock">

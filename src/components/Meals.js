@@ -1,10 +1,10 @@
 import React from "react";
 import Dish from "./Dish";
 
-export default function Meals({ menuTitle, dishes, setPopUp }) {
+export default function Meals({ menu, dishes, setPopUp, activeMenu }) {
   return (
-    <div id={`${menuTitle}`} className="meals">
-      <p>{menuTitle}</p>
+    <div id={`${menu}`} className={`meals`}>
+      <p>{menu}</p>
       <div>
         {dishes.map((element, index) => {
           return <Dish key={index} dish={element} setPopUp={setPopUp} />;
