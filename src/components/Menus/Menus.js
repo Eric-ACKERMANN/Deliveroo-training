@@ -1,13 +1,12 @@
 import React from "react";
 import Meals from "../Meals";
 import Navigator from "../Navigator";
-import { callbackify } from "util";
 
 export default class Menu extends React.Component {
   state = {
     menuElements: null,
     position: null,
-    positionForced: null,
+    positionForced: { bool: false, index: null },
     shownTitles: [],
     hiddenTitles: [],
     titlesDOM_R: [],
@@ -43,33 +42,34 @@ export default class Menu extends React.Component {
     let hiddenTitleDOMElement = document.getElementById(
       "hiddenTitles-nav-element"
     );
-    let bool;
-    if (this.state.positionForced) bool = this.state.positionForced.bool;
-    for (let i = 0; i < menuElements.length; i++) {
-      if (bool) {
-        let position = this.state.positionForced.index;
-        if (i === position) {
-          bool = false;
-        } else {
-          break;
-        }
-      }
-      let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
-      if (
-        menuElements[i].top - parameter <= positionY &&
-        menuElements[i].bottom - parameter >= positionY
-      ) {
-        navTitleDOMElement.classList.add("nav-selected");
 
-        if (navTitleDOMElement.classList.contains("no-visibility")) {
-          loli.innerHTML = menuElements[i].title;
-          hiddenTitleDOMElement.classList.add("nav-selected");
+    if (this.state.positionForced.bool) {
+      let index = this.state.positionForced.index;
+      if (
+        menuElements[index].top - parameter <= positionY &&
+        menuElements[index].bottom - parameter >= positionY
+      ) {
+        this.setState({ positionForced: { bool: false, index: null } });
+      }
+    } else {
+      for (let i = 0; i < menuElements.length; i++) {
+        let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
+        if (
+          menuElements[i].top - parameter <= positionY &&
+          menuElements[i].bottom - parameter >= positionY
+        ) {
+          navTitleDOMElement.classList.add("nav-selected");
+
+          if (navTitleDOMElement.classList.contains("no-visibility")) {
+            loli.innerHTML = menuElements[i].title;
+            hiddenTitleDOMElement.classList.add("nav-selected");
+          } else {
+            loli.innerHTML = "Plus";
+            hiddenTitleDOMElement.classList.remove("nav-selected");
+          }
         } else {
-          loli.innerHTML = "Plus";
-          hiddenTitleDOMElement.classList.remove("nav-selected");
+          navTitleDOMElement.classList.remove("nav-selected");
         }
-      } else {
-        navTitleDOMElement.classList.remove("nav-selected");
       }
     }
   };
@@ -88,6 +88,26 @@ export default class Menu extends React.Component {
   handleClickNavLink = async position => {
     let positionForced = { bool: true, index: position };
     await this.setState({ positionForced: positionForced });
+    const menuElements = this.state.menuElements;
+    let loli = document.getElementById("loli");
+    let hiddenTitleDOMElement = document.getElementById(
+      "hiddenTitles-nav-element"
+    );
+    for (let i = 0; i < menuElements.length; i++) {
+      let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
+      if (i === position) {
+        navTitleDOMElement.classList.add("nav-selected");
+        if (navTitleDOMElement.classList.contains("no-visibility")) {
+          loli.innerHTML = menuElements[i].title;
+          hiddenTitleDOMElement.classList.add("nav-selected");
+        } else {
+          loli.innerHTML = "Plus";
+          hiddenTitleDOMElement.classList.remove("nav-selected");
+        }
+      } else {
+        navTitleDOMElement.classList.remove("nav-selected");
+      }
+    }
   };
 
   setStateRightLimits = menuTitles => {
@@ -199,45 +219,3 @@ export default class Menu extends React.Component {
     window.removeEventListener("resize");
   }
 }
-
-// const setIntersectionObserver = () => {
-//   let options = {
-//     options1: { root: null, rootMargin: "-200px 0 0 0", threshold: 0 },
-//     options2: {
-//       root: null,
-//       rootMargin: "0 0 calc(200px-100%) 0",
-//       threshold: 0
-//     }
-//   };
-
-//   let callback1 = function(entries, observer) {
-//     entries.forEach(entry => {
-//       if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-//         entry.target.classList.add("nav-selected");
-//       } else {
-//         entry.target.classList.remove("nav-selected");
-//       }
-//     });
-//   };
-//   let callback2 = function(entries, observer) {
-//     entries.forEach(entry => {
-//       if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-//         entry.target.classList.add("nav-selected");
-//       } else {
-//         entry.target.classList.remove("nav-selected");
-//       }
-//     });
-//   };
-//   const observer1 = new IntersectionObserver(callback1, options.options1);
-//   const observer2 = new IntersectionObserver(callback2, options.options2);
-
-//   const menuTitles = Object.keys(this.props.menus);
-//   let menuHTMLElements = [];
-//   for (let i = 0; i < menuTitles.length; i++) {
-//     let DOMelement = document.getElementById(menuTitles[i]);
-//     menuHTMLElements.push(DOMelement);
-//   }
-
-//   observer1.observe(menuHTMLElements);
-//   observer2.observe(menuHTMLElements);
-// };

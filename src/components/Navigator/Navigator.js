@@ -14,22 +14,6 @@ export default function Navigator({
   toggleDropDown,
   handleClickNavLink
 }) {
-  // const displayTitles = function(titles, className, id) {
-  //   return titles.map((e, index) => {
-  //     return (
-  //       <a
-  //         id={`${id}_${index}}`}
-  //         className={className}
-  //         onClick={() => handleClickNavLink(index)}
-  //         href={`#${e}`}
-  //         key={index}
-  //       >
-  //         {e}
-  //       </a>
-  //     );
-  //   });
-  // };
-  console.log("navigator render");
   return (
     <nav>
       <div className="container navigator">
@@ -38,7 +22,7 @@ export default function Navigator({
             {menuTitles.map((e, index) => {
               return (
                 <a
-                  onClick={event => handleClickNavLink(event.target.id, index)}
+                  onClick={() => handleClickNavLink(index)}
                   id={`shownTitles_${index}`}
                   key={index}
                   className={"nav-link"}
