@@ -42,7 +42,7 @@ export default class Menu extends React.Component {
     let hiddenTitleDOMElement = document.getElementById(
       "hiddenTitles-nav-element"
     );
-    console.log(this.state.positionForced);
+
     if (this.state.positionForced.bool) {
       let index = this.state.positionForced.index;
 
