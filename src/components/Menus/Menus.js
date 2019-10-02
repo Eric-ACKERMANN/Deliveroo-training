@@ -56,7 +56,7 @@ export default class Menu extends React.Component {
       for (let i = 0; i < menuElements.length; i++) {
         let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
         if (
-          menuElements[i].top - parameter <= positionY &&
+          menuElements[i].top - parameter < positionY &&
           menuElements[i].bottom - parameter >= positionY
         ) {
           navTitleDOMElement.classList.add("nav-selected");
