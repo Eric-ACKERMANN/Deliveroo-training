@@ -15,28 +15,27 @@ export default function Navigator({
   handleClickNavLink,
   activeMenu
 }) {
-  const renderItems = () => {
-    return menuTitles.map((menu, index) => {
-      const activeClass = activeMenu === menu ? "nav-selected" : "";
-      return (
-        <a
-          onClick={() => handleClickNavLink(index)}
-          id={`shownTitles_${index}`}
-          key={index}
-          className={`nav-link ${activeClass}`}
-          href={`#${menu}`}
-        >
-          {menu}
-        </a>
-      );
-    });
-  };
+
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <div id={`shownTitlesContainer`} className="shownTitles">
-            {renderItems()}
+
+            {menuTitles.map((e, index) => {
+              return (
+                <a
+                  onClick={() => handleClickNavLink(index)}
+                  id={`shownTitles_${index}`}
+                  key={index}
+                  className={"nav-link"}
+                  href={`#${e}`}
+                >
+                  {e}
+                </a>
+              );
+            })}
+
           </div>
 
           <div id={`hiddenTitles`} className="hiddenTitlesBlock">

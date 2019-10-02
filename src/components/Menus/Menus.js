@@ -34,6 +34,48 @@ export default class Menu extends React.Component {
     this.setState({ position: e });
   };
 
+
+  handleScrollPosition = () => {
+    const menuElements = this.state.menuElements;
+    let positionY = window.scrollY;
+    let parameter = 100;
+    let loli = document.getElementById("loli");
+    let hiddenTitleDOMElement = document.getElementById(
+      "hiddenTitles-nav-element"
+    );
+
+    if (this.state.positionForced.bool) {
+      let index = this.state.positionForced.index;
+      if (
+        menuElements[index].top - parameter <= positionY &&
+        menuElements[index].bottom - parameter >= positionY
+      ) {
+        this.setState({ positionForced: { bool: false, index: null } });
+      }
+    } else {
+      for (let i = 0; i < menuElements.length; i++) {
+        let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
+        if (
+          menuElements[i].top - parameter <= positionY &&
+          menuElements[i].bottom - parameter >= positionY
+        ) {
+          navTitleDOMElement.classList.add("nav-selected");
+
+          if (navTitleDOMElement.classList.contains("no-visibility")) {
+            loli.innerHTML = menuElements[i].title;
+            hiddenTitleDOMElement.classList.add("nav-selected");
+          } else {
+            loli.innerHTML = "Plus";
+            hiddenTitleDOMElement.classList.remove("nav-selected");
+          }
+        } else {
+          navTitleDOMElement.classList.remove("nav-selected");
+        }
+      }
+    }
+  };
+
+
   getDOMBorder = (id, border) => {
     const DOM_element = document.getElementById(id);
     return DOM_element.getBoundingClientRect()[border];
@@ -48,6 +90,26 @@ export default class Menu extends React.Component {
   handleClickNavLink = async position => {
     let positionForced = { bool: true, index: position };
     await this.setState({ positionForced: positionForced });
+    const menuElements = this.state.menuElements;
+    let loli = document.getElementById("loli");
+    let hiddenTitleDOMElement = document.getElementById(
+      "hiddenTitles-nav-element"
+    );
+    for (let i = 0; i < menuElements.length; i++) {
+      let navTitleDOMElement = document.getElementById(`shownTitles_${i}`);
+      if (i === position) {
+        navTitleDOMElement.classList.add("nav-selected");
+        if (navTitleDOMElement.classList.contains("no-visibility")) {
+          loli.innerHTML = menuElements[i].title;
+          hiddenTitleDOMElement.classList.add("nav-selected");
+        } else {
+          loli.innerHTML = "Plus";
+          hiddenTitleDOMElement.classList.remove("nav-selected");
+        }
+      } else {
+        navTitleDOMElement.classList.remove("nav-selected");
+      }
+    }
   };
 
   setStateRightLimits = menuTitles => {
