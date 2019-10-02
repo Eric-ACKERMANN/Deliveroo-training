@@ -12,42 +12,31 @@ export default function Navigator({
   positionOfWindow,
   navDropDown,
   toggleDropDown,
-  handleClickNavLink
+  handleClickNavLink,
+  activeMenu
 }) {
-  // const displayTitles = function(titles, className, id) {
-  //   return titles.map((e, index) => {
-  //     return (
-  //       <a
-  //         id={`${id}_${index}}`}
-  //         className={className}
-  //         onClick={() => handleClickNavLink(index)}
-  //         href={`#${e}`}
-  //         key={index}
-  //       >
-  //         {e}
-  //       </a>
-  //     );
-  //   });
-  // };
-  console.log("navigator render");
+  const renderItems = () => {
+    return menuTitles.map((menu, index) => {
+      const activeClass = activeMenu === menu ? "nav-selected" : "";
+      return (
+        <a
+          onClick={() => handleClickNavLink(index)}
+          id={`shownTitles_${index}`}
+          key={index}
+          className={`nav-link ${activeClass}`}
+          href={`#${menu}`}
+        >
+          {menu}
+        </a>
+      );
+    });
+  };
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <div id={`shownTitlesContainer`} className="shownTitles">
-            {menuTitles.map((e, index) => {
-              return (
-                <a
-                  onClick={event => handleClickNavLink(event.target.id, index)}
-                  id={`shownTitles_${index}`}
-                  key={index}
-                  className={"nav-link"}
-                  href={`#${e}`}
-                >
-                  {e}
-                </a>
-              );
-            })}
+            {renderItems()}
           </div>
 
           <div id={`hiddenTitles`} className="hiddenTitlesBlock">

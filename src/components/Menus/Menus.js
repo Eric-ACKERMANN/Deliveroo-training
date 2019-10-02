@@ -6,7 +6,7 @@ export default class Menu extends React.Component {
   state = {
     menuElements: null,
     position: null,
-    positionForced: null,
+    positionForced: { bool: false, index: null },
     shownTitles: [],
     hiddenTitles: [],
     titlesDOM_R: [],
@@ -57,14 +57,14 @@ export default class Menu extends React.Component {
     for (let i = 0; i < menuTitles.length; i++) {
       // DOM element of a title
       const titleDOM_R = this.getDOMBorder(`shownTitles_${i}`, "right");
-      titlesDOM_R.push(7 * i + titleDOM_R - containerDOM_L);
+      titlesDOM_R.push(10 * i + titleDOM_R - containerDOM_L);
     }
 
     this.setState({ titlesDOM_R: titlesDOM_R });
     return titlesDOM_R;
   };
 
-  handleFirstRender = async () => {
+  handleWindowResize = async () => {
     const menuTitles = Object.keys(this.props.menus);
     // Create the state withh all the right limits of blocks
     await this.setStateRightLimits(menuTitles);
@@ -90,6 +90,13 @@ export default class Menu extends React.Component {
         hiddenTitleDOM && hiddenTitleDOM.classList.add("no-display");
       }
     }
+  };
+
+  handleFirstRender = async () => {
+    const menuTitles = Object.keys(this.props.menus);
+    // Create the state withh all the right limits of blocks
+    await this.setStateRightLimits(menuTitles);
+    this.handleWindowResize();
   };
 
   toggleNavDropDown = async () => {
@@ -165,7 +172,6 @@ export default class Menu extends React.Component {
     } = this.props;
 
     const menuTitles = Object.keys(menus);
-    console.log("Menus render");
     return (
       <div className="menuBlock">
         <Navigator
@@ -186,12 +192,12 @@ export default class Menu extends React.Component {
         />
         <div className="container menu">
           <div className="leftBlock">
-            {menuTitles.map((menuTitle, index) => {
+            {menuTitles.map((menu, index) => {
               return (
                 <Meals
                   key={index}
-                  menuTitle={menuTitle}
-                  dishes={menus[menuTitle]}
+                  menu={menu}
+                  dishes={menus[menu]}
                   setPopUp={setPopUp}
                 />
               );
@@ -206,9 +212,12 @@ export default class Menu extends React.Component {
 
   componentDidMount() {
     this.getMenusDOMElements(this.props.menus);
+    this.handleFirstRender();
     this.setIntersectionObserver();
-    console.log("hey");
+    window.addEventListener("resize", this.handleWindowResize);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    window.removeEventListener("resize");
+  }
 }
