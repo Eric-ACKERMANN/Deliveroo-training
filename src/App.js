@@ -191,6 +191,8 @@ class App extends React.Component {
       }
     ];
 
+    console.log(this.state.basket);
+
     return (
       <div ref={ref => (this._app = ref)}>
         <Header

@@ -63,6 +63,7 @@ svg:hover {
   color: var(--color-main);
   font-family: var(--font-family-main);
   border-radius: var(--btn-border-radius);
+  background-color: var(--background-color-main);
   transition: all 0.3s;
 }
 
@@ -295,6 +296,7 @@ nav {
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .navigator {
@@ -600,6 +602,26 @@ nav {
   margin-top: 15px;
   box-shadow: 0;
   transition: box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.plate-animation {
+  position: absolute;
+  left: 0;
+  align-self: center;
+  background-color: var(--color-second);
+  height: 100%;
+  width: 3px;
+  transition: height 0.3s;
+  --webkit-transition: height 0.3s;
+}
+
+.plate-animation-shrink {
+  transition: height 0.3s;
+  --webkit-transition: height 0.3s;
+  height: 0;
 }
 
 .plate-container:hover {
@@ -619,6 +641,13 @@ nav {
   color: #2e3333;
   font-family: "IBM Plex Sans", sans-serif;
   margin-bottom: 5px;
+}
+
+.plate-basketQuantity {
+  padding-right: 5px;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  color: #828585;
 }
 
 .plate-description {
@@ -674,7 +703,7 @@ nav {
   min-height: 100vh;
   width: 100vw;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -808,6 +837,7 @@ svg:hover > g {
 
 /* Button to cancel in popUpScreen */
 .cancelButton {
+  cursor: pointer;
   flex: 1;
   height: 50px;
   border-radius: 3px;
@@ -817,12 +847,19 @@ svg:hover > g {
   background-color: white;
   border: 1px solid #00ccbc;
   color: #00ccbc;
+  transition: border 0.3s, color 0.3s;
+  --webkit-transition: border 0.3s, color 0.3s;
 }
 
 .cancelButton:hover {
-  cursor: pointer;
   color: #00e6d2;
   border: 1px solid #00e6d2;
+  transition: border 0.3s, color 0.3s;
+  --webkit-transition: border 0.3s, color 0.3s;
+}
+
+.cancelButton:focus {
+  border: 2px solid #00ccbc;
 }
 
 /* Button that shows total purchase for one plate and confirm in popUpScreen */
@@ -837,9 +874,22 @@ svg:hover > g {
   background-color: #00ccbc;
   color: white;
   font-weight: 600;
+  transition: background-color 0.3s;
+  --webkit-transition: background-color 0.3s;
 }
 
 .totalButton:hover {
   cursor: pointer;
   background-color: #00e6d2;
+  transition: background-color 0.3s;
+  --webkit-transition: background-color 0.3s;
 }
+
+.totalButton:focus {
+  cursor: pointer;
+  background-color: #00e6d2;
+  transition: background-color 0.3s;
+  --webkit-transition: background-color 0.3s;
+}
+
+

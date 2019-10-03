@@ -196,6 +196,7 @@ export default class Menu extends React.Component {
                   menu={menu}
                   dishes={menus[menu]}
                   setPopUp={setPopUp}
+                  basket={basket}
                 />
               );
             })}
