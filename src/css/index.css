@@ -308,7 +308,6 @@ nav {
 .navigator .leftBlock {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .navigator .rightBlock {
@@ -357,7 +356,6 @@ nav {
 .hiddenTitles-element {
   text-decoration: none;
   background-color: var(--background-color-main);
-
   font-size: 16px;
   line-height: 16px;
   color: var(--color-main);
@@ -651,14 +649,19 @@ nav {
 }
 
 .plate-description {
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 14px;
   line-height: 19px;
   color: #828585;
   text-overflow: ellipsis;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  height: 40px;
+}
+
+.plate-description-separator {
+  vertical-align: top;
+  line-height: 19px;
+  font-size: 14px;
 }
 .plate-price-popular-div {
   margin: 0;
@@ -666,8 +669,8 @@ nav {
   margin-top: 5px;
 }
 .plate-price {
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 19px;
   color: #828585;
   margin: 0;
   padding: 0;
@@ -688,7 +691,6 @@ nav {
   color: #ff8100;
   font-size: 12px;
   font-weight: 800;
-  margin-left: 20px;
 }
 
 #star-logo {
@@ -892,4 +894,115 @@ svg:hover > g {
   --webkit-transition: background-color 0.3s;
 }
 
+/********** MEDIA QUERIES *************/
+@media only screen and (max-width: 980px) {
+  .plate-container {
+    width: 100%;
+  }
+}
 
+@media only screen and (max-width: 768px) {
+  .container {
+  }
+
+  /***** RESTAURANT ******/
+  .restaurant {
+    flex-direction: column-reverse;
+    padding: 0;
+  }
+
+  .restaurant img {
+    height: 168px;
+  }
+
+  .leftBlock {
+    flex: 0 1 100%;
+    max-width: 100%;
+    padding: 0px 16px;
+  }
+
+  /**** MENU ****/
+  .menu {
+    padding: 0;
+  }
+
+  .menu .leftBlock {
+    padding: 0;
+  }
+  .menu .rightBlock {
+    display: none;
+  }
+
+  /***** NAVIGATOR *****/
+  .navigator {
+  }
+
+  .navigator .rightBlock {
+    display: none;
+  }
+  #hiddenTitles {
+    display: none;
+  }
+
+  .navigator .leftBlock {
+    padding: 0;
+  }
+  .navigator .shownTitles {
+    overflow-x: scroll;
+    scrollbar-width: none;
+  }
+
+  .navigator .shownTitles::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*** BASKET ****/
+  .basket {
+  }
+
+  /*** MEALS ***/
+  .meals {
+    padding: 0;
+  }
+
+  .meals > p {
+    padding: 40px 16px 16px 16px;
+    font-size: 22px;
+    line-height: 22px;
+  }
+
+  /*** DISH ***/
+  .plate-container {
+    margin-top: 0px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .plate-container:last-child {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .plate-container:hover {
+    cursor: default;
+    box-shadow: none;
+    transition: none;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  /******** POPUP *****/
+  .popUp-plate-container {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  /******* POPUP MENU *******/
+  .popUpMenu {
+    width: 100%;
+  }
+
+  .navigator {
+    padding: 0;
+  }
+}

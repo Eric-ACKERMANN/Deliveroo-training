@@ -20,9 +20,20 @@ export default function Dish({ dish, setPopUp, basketQuantity }) {
 
       <div className="plate-description-div">
         {title}
-        <p className="plate-description">{dish.description}</p>
+
+        {dish.description ? (
+          <p className="plate-description">
+            {`${dish.description}`}{" "}
+            <span className="plate-description-separator">-</span>{" "}
+            {`${dish.price} €`}
+          </p>
+        ) : (
+          <p className="plate-description">
+            <span className="plate-price">{`${dish.price} €`}</span>
+          </p>
+        )}
+
         <p className="plate-price-popular-div">
-          <span className="plate-price">{`${dish.price} €`}</span>
           {dish.popular && (
             <span className="plate-populaire">
               <i id="star-logo" className="fas fa-star" />

@@ -10,6 +10,7 @@ export default class Menu extends React.Component {
     shownTitles: [],
     hiddenTitles: [],
     titlesDOM_R: [],
+    titlesDOM_L: [],
     titlesPosition: null,
     navDropDown: false
   };
@@ -60,6 +61,10 @@ export default class Menu extends React.Component {
           menuElements[i].bottom - parameter >= positionY
         ) {
           navTitleDOMElement.classList.add("nav-selected");
+          if (window.innerWidth < 768) {
+            let container = document.getElementById("shownTitlesContainer");
+            container.scrollLeft = this.state.titlesDOM_L[i];
+          }
 
           if (navTitleDOMElement.classList.contains("no-visibility")) {
             loli.innerHTML = menuElements[i].title;
@@ -89,6 +94,13 @@ export default class Menu extends React.Component {
   handleClickNavLink = async position => {
     let positionForced = { bool: true, index: position };
     await this.setState({ positionForced: positionForced });
+
+    // If window width < 768px
+    if (window.innerWidth < 768) {
+      let container = document.getElementById("shownTitlesContainer");
+      container.scrollLeft = this.state.titlesDOM_L[position];
+    }
+
     const menuElements = this.state.menuElements;
     let loli = document.getElementById("loli");
     let hiddenTitleDOMElement = document.getElementById(
@@ -111,27 +123,44 @@ export default class Menu extends React.Component {
     }
   };
 
-  setStateRightLimits = menuTitles => {
+  setStateRightAndLeftLimits = menuTitles => {
     let titlesDOM_R = [];
+    let titlesDOM_L = [];
     // DOM Element of container
     const containerDOM_L = this.getDOMBorder("shownTitlesContainer", "left");
     for (let i = 0; i < menuTitles.length; i++) {
       // DOM element of a title
       const titleDOM_R = this.getDOMBorder(`shownTitles_${i}`, "right");
+      const titleDOM_L = this.getDOMBorder(`shownTitles_${i}`, "left");
+
       titlesDOM_R.push(10 * i + titleDOM_R - containerDOM_L);
+      titlesDOM_L.push(titleDOM_L - containerDOM_L);
     }
 
-    this.setState({ titlesDOM_R: titlesDOM_R });
+    this.setState({ titlesDOM_R: titlesDOM_R, titlesDOM_L: titlesDOM_L });
     return titlesDOM_R;
   };
 
   handleWindowResize = () => {
+    const titlesDOM_R = this.state.titlesDOM_R;
+    if (window.innerWidth < 768) {
+      for (let i = 0; i < titlesDOM_R.length; i++) {
+        let titleDOM = document.getElementById(`shownTitles_${i}`);
+        titleDOM.classList.remove("no-visibility");
+      }
+
+      for (let i = 0; i < titlesDOM_R.length; i++) {
+        let titleDOM = document.getElementById(`shownTitles_${i}`);
+        titleDOM.classList.remove("no-visibility");
+      }
+
+      return;
+    }
     const hid_TitlesDOM_L = this.getDOMBorderRelative(
       { id: "hiddenTitles", border: "left" },
       { id: "shownTitlesContainer", border: "left" }
     );
 
-    const titlesDOM_R = this.state.titlesDOM_R;
     for (let i = 0; i < titlesDOM_R.length; i++) {
       let titleDOM = document.getElementById(`shownTitles_${i}`);
       let hiddenTitleDOM = document.getElementById(`hiddenTitles_${i}`);
@@ -149,7 +178,7 @@ export default class Menu extends React.Component {
   handleFirstRender = async () => {
     const menuTitles = Object.keys(this.props.menus);
     // Create the state withh all the right limits of blocks
-    await this.setStateRightLimits(menuTitles);
+    await this.setStateRightAndLeftLimits(menuTitles);
     this.handleWindowResize();
   };
 
