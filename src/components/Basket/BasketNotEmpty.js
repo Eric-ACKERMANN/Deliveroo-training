@@ -40,7 +40,9 @@ export default function BasketNotEmpty({
           })}
 
           <li>
-            <a href="*">Précisez vos allergies</a>
+            <a className="link-allergies" href="*">
+              Précisez vos allergies
+            </a>
           </li>
         </ul>
         <div className="basket-before-total">

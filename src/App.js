@@ -191,8 +191,6 @@ class App extends React.Component {
       }
     ];
 
-    console.log(this.state.basket);
-
     return (
       <div ref={ref => (this._app = ref)}>
         <Header
@@ -214,12 +212,11 @@ class App extends React.Component {
           setValidation={this.handleClickValidation}
         />
 
-        {this.state.popUpMenu.display && (
-          <PopUpMenu
-            popUpMenu={this.state.popUpMenu}
-            cancelPopUpMenu={this.cancelPopUpMenu}
-          />
-        )}
+        <PopUpMenu
+          popUpMenu={this.state.popUpMenu}
+          cancelPopUpMenu={this.cancelPopUpMenu}
+        />
+
         <Restaurant
           img={this.state.restaurantInfo.picture}
           alt={`${this.state.restaurantInfo.name} image`}

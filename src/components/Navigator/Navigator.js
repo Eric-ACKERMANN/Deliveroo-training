@@ -2,6 +2,7 @@ import React from "react";
 import BasketNotEmpty from "../Basket/BasketNotEmpty";
 import BasketEmpty from "../Basket/BasketEmpty";
 import ClickListener from "../ClickListener";
+import BasketMobile from "../Basket/BasketMobile";
 
 export default function Navigator({
   menuTitles,
@@ -15,13 +16,11 @@ export default function Navigator({
   handleClickNavLink,
   activeMenu
 }) {
-
   return (
     <nav>
       <div className="container navigator">
         <div className="leftBlock">
           <div id={`shownTitlesContainer`} className="shownTitles">
-
             {menuTitles.map((e, index) => {
               return (
                 <a
@@ -35,7 +34,6 @@ export default function Navigator({
                 </a>
               );
             })}
-
           </div>
 
           <div id={`hiddenTitles`} className="hiddenTitlesBlock">
@@ -87,6 +85,12 @@ export default function Navigator({
           )}
         </div>
       </div>
+      <BasketMobile
+        basket={basket}
+        price={price}
+        modifyQuantity={modifyQuantity}
+        setTips={setTips}
+      />
     </nav>
   );
 }

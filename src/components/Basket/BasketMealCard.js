@@ -7,10 +7,11 @@ export default function({
   unitPrice,
   svg,
   modifyQuantity,
-  idItem
+  idItem,
+  className
 }) {
   return (
-    <li className="basket-mealcard">
+    <li className={`basket-mealcard ${className}`}>
       <Counter
         svg={svg}
         quantityClick={modifyQuantity}

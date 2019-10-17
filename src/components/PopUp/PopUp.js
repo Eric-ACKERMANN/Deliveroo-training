@@ -28,7 +28,10 @@ export default function PopUp({
         }
       >
         {popUpDisplayBoolean && (
-          <ClickListener onClick={togglePopUp}>
+          <ClickListener
+            onClick={togglePopUp}
+            className="flex-column height100"
+          >
             <div className="popUp-plate-upper">
               {dish.picture && (
                 <img
