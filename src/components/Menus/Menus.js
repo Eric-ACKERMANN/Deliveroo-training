@@ -12,7 +12,8 @@ export default class Menu extends React.Component {
     titlesDOM_R: [],
     titlesDOM_L: [],
     titlesPosition: null,
-    navDropDown: false
+    navDropDown: false,
+    basketMobileDeployed: false
   };
 
   getMenusDOMElements = menus => {
@@ -187,6 +188,10 @@ export default class Menu extends React.Component {
     this.handleWindowResize();
   };
 
+  toggleBasketMobile = () => {
+    this.setState({ basketMobileDeployed: !this.state.basketMobileDeployed });
+  };
+
   render() {
     const {
       menus,
@@ -215,6 +220,8 @@ export default class Menu extends React.Component {
           navDropDown={this.state.navDropDown}
           toggleDropDown={this.toggleNavDropDown}
           handleClickNavLink={this.handleClickNavLink}
+          basketMobileDeployed={this.state.basketMobileDeployed}
+          toggleBasketMobile={this.toggleBasketMobile}
         />
         <div className="container menu">
           <div className="leftBlock">

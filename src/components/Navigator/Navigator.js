@@ -14,7 +14,9 @@ export default function Navigator({
   navDropDown,
   toggleDropDown,
   handleClickNavLink,
-  activeMenu
+  activeMenu,
+  basketMobileDeployed,
+  toggleBasketMobile
 }) {
   return (
     <nav>
@@ -85,12 +87,16 @@ export default function Navigator({
           )}
         </div>
       </div>
-      <BasketMobile
-        basket={basket}
-        price={price}
-        modifyQuantity={modifyQuantity}
-        setTips={setTips}
-      />
+      {basket.length > 0 && (
+        <BasketMobile
+          basket={basket}
+          price={price}
+          modifyQuantity={modifyQuantity}
+          setTips={setTips}
+          basketMobileDeployed={basketMobileDeployed}
+          toggleBasketMobile={toggleBasketMobile}
+        />
+      )}
     </nav>
   );
 }

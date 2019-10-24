@@ -50,8 +50,9 @@ svg:hover {
   flex-direction: column;
 }
 
-.height100 {
-  height: 100%;
+.height0 {
+  height: 0;
+  transition: all 0.3s;
 }
 
 .container {
@@ -955,26 +956,88 @@ svg:hover > g {
 /********** BASKET MOBILE *************/
 .basketMobile {
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   bottom: 0;
   z-index: 200;
-  background-color: var(--background-color-main);
   width: 100%;
+  transition: all 3s;
+  overflow: hidden;
+  height: auto;
+  max-height: 100vh;
+  box-shadow: 0px -3px 6px -2px rgba(0, 0, 0, 0.07);
+}
+
+.height100 {
+  height: 100%;
+  transition: all 3s;
 }
 
 .basketMobile-upper {
   width: 100%;
+  height: 0;
+  background-color: var(--background-color-main);
 }
 
-.basketMobile-basketMealCard {
-  padding: 0;
+.basketMobile-upper-big {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color-main);
 }
+
+@keyframes translateUp {
+  0% {
+    margin-top: 100%;
+  }
+
+  100% {
+    margin-top: 0%;
+  }
+}
+
+.translateUp {
+  animation-name: translateUp;
+  animation-duration: 0.3s;
+}
+
 .basketMobile-lower {
+  box-shadow: 0px -3px 6px -2px rgba(0, 0, 0, 0.07);
   display: flex;
   width: 100vw;
   flex-direction: column;
   padding: 16px 0px;
+  background-color: var(--background-color-main);
+}
+
+.basketMobile-titleline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.basketMobile-list {
+  flex: 1;
+  overflow: scroll;
+}
+
+.basketMobile-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #2e3333;
+  font-family: var(--font-family-second);
+}
+.basketMobile-link {
+  margin-top: 16px;
+}
+.basketMobile-basketMealCard {
+  padding: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
 }
 
 .basketMobile-lower-btn {
@@ -982,6 +1045,14 @@ svg:hover > g {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.basketMobile-total {
+  box-shadow: none;
+}
+
+.basketMobile-total .basket-recipe-element:first-child {
+  padding: 16px 16px 6px 16px;
 }
 
 .pad8 {
@@ -993,7 +1064,13 @@ svg:hover > g {
 }
 
 .v-marg16 {
-  margin: 0px 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.h-marg16 {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .mt8 {
@@ -1088,6 +1165,10 @@ svg:hover > g {
     cursor: default;
     box-shadow: none;
     transition: none;
+  }
+
+  .basketMobile {
+    display: flex;
   }
 }
 
