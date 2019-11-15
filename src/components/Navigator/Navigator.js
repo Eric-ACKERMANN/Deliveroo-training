@@ -10,11 +10,9 @@ export default function Navigator({
   price,
   modifyQuantity,
   setTips,
-  positionOfWindow,
   navDropDown,
   toggleDropDown,
   handleClickNavLink,
-  activeMenu,
   basketMobileDeployed,
   toggleBasketMobile
 }) {
@@ -42,11 +40,7 @@ export default function Navigator({
             <div
               id={`hiddenTitles-nav-element`}
               onClick={toggleDropDown}
-              className={
-                positionOfWindow >= menuTitles.length
-                  ? "nav-link nav-selected test"
-                  : "nav-link nav-unselected test"
-              }
+              className="nav-link nav-unselected test"
             >
               <span id={"loli"}>Plus</span>
               <i className="fas fa-chevron-down" />

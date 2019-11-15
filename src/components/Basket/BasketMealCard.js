@@ -1,7 +1,7 @@
 import React from "react";
 import Counter from "../Counter";
 
-export default function({
+export default function BasketMealCard({
   quantity,
   title,
   unitPrice,
